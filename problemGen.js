@@ -95,7 +95,6 @@ const answerGen = (question) => {
   // use matching function from operations
   // question format [operator, num1, num2]
   let operation = operations[question[0]]
-  console.log(typeof operation)
   let answer = Number(operation(question[1], question[2]))
   let answers = incorrectAnswerGen(question[0], answer)
   answers.push(answer);
@@ -109,7 +108,5 @@ const questionGen = (operator, max, min) => {
   let num2 = numGenerator(max, min);
   return answerGen([operator, num1, num2]);
 };
-
-console.log(questionGen('*'))
 
 module.exports = questionGen;

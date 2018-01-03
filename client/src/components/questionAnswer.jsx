@@ -46,7 +46,7 @@ class QuestionAnswer extends React.Component {
 																														answer={answer} 
 																														key={id} 
 																														findCorrect={this.props.findCorrect} />)}</li>
-				<span>{this.state.timeElapsed}</span>
+				<Timer time={this.props.timeElapsed} />
 				<span>Questions Left: {this.questionsLeft}</span>
 			</div>
 		)
@@ -61,3 +61,9 @@ const Answer = (props) => (
 )
 
 export {Answer}
+
+const Timer = (props) => (
+	<span>Time Elapsed: {props.time}</span>
+)
+
+export {Timer}

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './components/game.jsx'
+
 // import NavSideBar from './components/navSideBar.jsx'
 // import InfoSideBar from './components/infoSideBar.jsx'
 
@@ -12,7 +13,7 @@ class App extends React.Component {
       timeElapsed: 0,
       numberCorrect: 0,
       numberIncorrect: 0,
-      questionsLeft: 0,
+      questionsLeft: 20,
       inProgressBool: false,
       correctArray: [],
       incorrectArray: []
