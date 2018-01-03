@@ -26,13 +26,6 @@ const operations = {
   '/' : (x, y) => {return x / y}
 };
 
-const questionGen = (operator, max, min) => {
-  // generate numbers
-  let num1 = numGenerator(max, min);
-  let num2 = numGenerator(max, min)
-  return [operator, num1, num2]
-};
-
 // default max digit is 4
 const numGenerator = (max = 4, min = 0) => {
   let digits = Math.ceil(Math.random() * (max - min) + min);
@@ -102,11 +95,21 @@ const answerGen = (question) => {
   // use matching function from operations
   // question format [operator, num1, num2]
   let operation = operations[question[0]]
+  console.log(typeof operation)
   let answer = Number(operation(question[1], question[2]))
   let answers = incorrectAnswerGen(question[0], answer)
   answers.push(answer);
-  answers = roundDigits(answers)
+  answers = roundDigits(answers);
   return {'question': question, 'choices': answers, 'correctAnswer': Number(answer.toFixed(3))};
 };
 
-console.log(answerGen(questionGen('/')))
+const questionGen = (operator, max, min) => {
+  // generate numbers
+  let num1 = numGenerator(max, min);
+  let num2 = numGenerator(max, min);
+  return answerGen([operator, num1, num2]);
+};
+
+console.log(questionGen('*'))
+
+module.exports = questionGen;
