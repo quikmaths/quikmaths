@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './components/game.jsx'
-import NavSideBar from './components/navsidebar.jsx'
-import InfoSideBar from './components/infosidebar.jsx'
+// import NavSideBar from './components/navsidebar.jsx'
+// import InfoSideBar from './components/infosidebar.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -101,13 +101,13 @@ class App extends React.Component {
         <h1>
           QuikMaths
         </h1>
-        <NavSideBar 
+        {/* <NavSideBar 
           problemType = {this.state.problemType}
           inProgressBool = {this.state.inProgressBool}
           inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
           problemTypeUpdate = {this.problemTypeUpdate.bind(this)}
           questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
-        />
+        /> */}
         <Game
           problemType = {this.state.problemType}
           timeElapsed = {this.state.timeElapsed}
@@ -125,10 +125,10 @@ class App extends React.Component {
           correctArrayUpdate = {this.correctArrayUpdate.bind(this)}
           incorrectArrayUpdate = {this.incorrectArrayUpdate.bind(this)}
         />
-        <InfoSideBar
+        {/* <InfoSideBar
           problemType = {this.state.problemType}
           inProgressBool = {this.state.inProgressBool}
-        />
+        /> */}
       </div>
     )
   }
