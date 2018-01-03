@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Game from './components/game.jsx'
-// import NavSideBar from './components/navsidebar.jsx'
-// import InfoSideBar from './components/infosidebar.jsx'
+import Game from './components/game.jsx';
+import NavSideBar from './components/navSideBar.jsx';
+import InfoSideBar from './components/infoSideBar.jsx';
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -17,6 +19,35 @@ class App extends React.Component {
       correctArray: [],
       incorrectArray: []
     }
+    this.AppStyle = {
+      display: 'grid',
+      gridTemplateColumns: '1fr 3fr 1fr',
+      gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
+      fontFamily: 'Poppins',
+      padding: '10px'
+    }
+
+    this.NavBarStyle = {
+      gridColumn: '1',
+      gridRow: '1/5'
+    }
+
+    this.InfoSideBarStyle = {
+      gridColumn: '4/5',
+      gridRow: '1/5',
+      fontFamily: 'Poppins',
+      backgroundColor: 'gray'
+      
+    }
+
+    this.GameStyle = {
+      gridColumn: '2/4',
+      gridRow: '1/5'
+    }
+
+
+
+
   }
 
   startTimer() {
@@ -95,20 +126,26 @@ class App extends React.Component {
     this.state.incorrectArray.push(question);
   }
 
+  startNewGame(operator) {
+    this.problemTypeUpdate(operator)
+    this.isProgressBoolUpdate()
+    this.resetCounts()
+  }
+
   render() {
     return (
-      <div>
-        <h1>
-          QuikMaths
-        </h1>
-        {/* <NavSideBar 
-          problemType = {this.state.problemType}
+      <div style={this.AppStyle}>
+      
+         <NavSideBar
+          style={this.NavBarStyle}
           inProgressBool = {this.state.inProgressBool}
+          startNewGame= {this.startNewGame.bind(this)}
           inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
           problemTypeUpdate = {this.problemTypeUpdate.bind(this)}
           questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
-        /> */}
+        />
         <Game
+          style={this.GameStyle}
           problemType = {this.state.problemType}
           timeElapsed = {this.state.timeElapsed}
           numberCorrect = {this.state.numberCorrect}
@@ -125,10 +162,11 @@ class App extends React.Component {
           correctArrayUpdate = {this.correctArrayUpdate.bind(this)}
           incorrectArrayUpdate = {this.incorrectArrayUpdate.bind(this)}
         />
-        {/* <InfoSideBar
+        <InfoSideBar
+          style={this.InfoSideBarStyle}
           problemType = {this.state.problemType}
           inProgressBool = {this.state.inProgressBool}
-        /> */}
+        />
       </div>
     )
   }
