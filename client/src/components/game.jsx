@@ -1,6 +1,6 @@
 import React from 'react'
-import QuestionAnswer from './QuestionAnswer.jsx'
-import Statistics from './Statistics.jsx'
+import QuestionAnswer from './questionAnswer.jsx'
+import Statistics from './statistics.jsx'
 import questionGen from '../../../problemGen.js'
 
 const problemType = {
@@ -12,16 +12,19 @@ const problemType = {
 
 class Game extends React.Component {
   constructor(props) {
-    super(props) {
+    super(props) 
       this.state = {
         questionString: '',
         answers: [],
-        correctAnswer: undefined
+        correctAnswer: undefined,
         questionsLeft: this.props.questionsLeft
       }
-    }
 
     this.newQuestion = this.newQuestion.bind(this);
+  }
+
+  componentWillMount(){
+    this.newQuestion()
   }
 
   newQuestion() {
@@ -33,6 +36,7 @@ class Game extends React.Component {
       correctAnswer: infoObject.correctAnswer
     })
   }
+
 
   render() {
     if (this.state.questionsLeft === 0) {
@@ -57,7 +61,7 @@ class Game extends React.Component {
             questionsLeftUpdate={this.props.questionsLeftUpdate}
             incorrectArrayUpdate={this.props.incorrectArrayUpdate}
             correctArrayUpdate={this.props.correctArrayUpdate}
-            inProgressBoolUpdate={this.props.inProgressBollUpdate}
+            inProgressBoolUpdate={this.props.inProgressBoolUpdate}
             timeElapsed={this.props.timeElapsed}
             questionsLeft={this.props.questionsLeft}
             numberIncorrectUpdate={this.props.numberIncorrectUpdate}
