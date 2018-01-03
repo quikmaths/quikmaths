@@ -13,7 +13,7 @@ class App extends React.Component {
       timeElapsed: 0,
       numberCorrect: 0,
       numberIncorrect: 0,
-      questionsLeft: 0,
+      questionsLeft: 20,
       inProgressBool: false,
       correctArray: [],
       incorrectArray: []

@@ -24,17 +24,17 @@ class Game extends React.Component {
   }
 
   newQuestion() {
-    let infoObject = questionGen(this.props.problemType, 1, 3);
+    let infoObject = questionGen(this.props.problemType, 3, 1);
     
     this.setState({
       questionString: infoObject.question,
       answers: infoObject.choices,
-      correctAnswer: correctAnswer
+      correctAnswer: infoObject.correctAnswer
     })
   }
 
   render() {
-    if (this.props.questionsLeft === 0) {
+    if (this.state.questionsLeft === 0) {
       return (
         <Statistics 
           numberCorrect={this.props.numberCorrect}
