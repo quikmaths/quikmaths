@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './components/game.jsx'
-// import NavSideBar from './components/navsidebar.jsx'
-// import InfoSideBar from './components/infosidebar.jsx'
+// import NavSideBar from './components/navSideBar.jsx'
+// import InfoSideBar from './components/infoSideBar.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -70,7 +70,7 @@ class App extends React.Component {
   resetCounts() {
     this.setState({
       numberIncorrect: 0,
-      numberIncorrect: 0
+      numberCorrect: 0
     })
   }
 
