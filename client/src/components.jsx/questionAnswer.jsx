@@ -17,7 +17,7 @@ class QuestionAnswer extends React.Component {
 			correct = true
 		}
 
-		this.props.newQuestion
+		this.props.newQuestion()
 	}
 
 	render(){
