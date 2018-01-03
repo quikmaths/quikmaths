@@ -30,11 +30,11 @@ class QuestionAnswer extends React.Component {
 	}
 }
 
-export default QuestionAnswer
+export {QuestionAnswer}
 
 
 const Answer = (props) => (
 	<button onClick={() => props.findCorrect(props.answer)}></button>
 )
 
-export default Answer 
+export {Answer}
