@@ -8,40 +8,77 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      problemType = '+',
-      timeElapsed = 0,
-      numberCorrect = 0,
-      questionsLeft = 0,
-      incorrectArray = [],
-      correctArray = [],
-      finalTime = 0,
-      inProgressBool = false
+      problemType: '+',
+      timeElapsed: 0,
+      numberCorrect: 0,
+      numberIncorrect: 0,
+      questionsLeft: 0,
+      finalTime: 0,
+      inProgressBool: false
     }
+  }
+
+  problemTypeUpdate(operator) {
+    this.setState({
+      problemType: operator
+    })
+  }
+
+  inProgressBoolUpdate() {
+    this.setState({
+      inProgressBool: !this.state.inProgressBool
+    })
+  }
+
+  numberCorrectUpdate() {
+    this.setState({
+      numberCorrect: this.state.numberCorrect + 1
+    })
+  }
+
+  numberIncorrectUpdate() {
+    this.setState({
+      numberIncorrect: this.state.numberIncorrect + 1
+    })
+  }
+
+  questionsLeftUpdate() {
+    this.setState({
+      questionsLeft: this.state.questionsLeft - 1
+    })
+  }
+  
+  finalTimeUpdate() {
+    this.setState({
+      finalTime: this.state.timeElapsed
+    })
   }
 
   render() {
     return (
-      <h1>
-        QuikMaths
-      </h1>
       <div>
+        <h1>
+          QuikMaths
+        </h1>
         <NavSideBar 
           problemType = {this.state.problemType}
           inProgressBool = {this.state.inProgressBool}
+          inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
+          problemTypeUpdate = {this.problemTypeUpdate.bind(this)}
         />
         <Game
           problemType = {this.state.problemType}
           timeElapsed = {this.state.timeElapsed}
           numberCorrect = {this.state.numberCorrect}
+          numberIncorrect = {this.state.numberIncorrect}
           questionsLeft = {this.state.questionsLeft}
           incorrectArray = {this.state.incorrectArray}
           correctArray = {this.state.correctArray}
           finalTime = {this.state.finalTime}
           inProgressBool = {this.state.inProgressBool}
           numberCorrectUpdate = {this.numberCorrectUpdate.bind(this)}
+          numberIncorrectUpdate = {this.numberIncorrectUpdate.bind(this)}
           questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
-          incorrectArrayUpdate = {this.incorrectArrayUpdate.bind(this)}
-          correctArrayUpdate = {this.correctArrayUpdate.bind(this)} 
           finalTimeUpdate = {this.finalTimeUpdate.bind(this)}
           inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
         />
