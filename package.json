@@ -8,6 +8,7 @@
     "start": "nodemon server.js",
     "compile": "webpack --watch"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
