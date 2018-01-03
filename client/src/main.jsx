@@ -18,6 +18,7 @@ class App extends React.Component {
       inProgressBool = false
     }
   }
+
   render() {
     return (
       <h1>
@@ -37,6 +38,12 @@ class App extends React.Component {
           correctArray = {this.state.correctArray}
           finalTime = {this.state.finalTime}
           inProgressBool = {this.state.inProgressBool}
+          numberCorrectUpdate = {this.numberCorrectUpdate.bind(this)}
+          questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
+          incorrectArrayUpdate = {this.incorrectArrayUpdate.bind(this)}
+          correctArrayUpdate = {this.correctArrayUpdate.bind(this)} 
+          finalTimeUpdate = {this.finalTimeUpdate.bind(this)}
+          inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
         />
         <InfoSideBar
           problemType = {this.state.problemType}
