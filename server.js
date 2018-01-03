@@ -1,9 +1,10 @@
 // Dependencies
 const express = require('express');
 const app = express();
+const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-app.get('/', (req, res) => res.send('Hello World'));
+app.use(express.static(path.join(__dirname, '/client/www')));
 
 app.listen(PORT, () => console.log(`Server listening on Port ${PORT}`));
