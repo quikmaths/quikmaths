@@ -55,8 +55,10 @@ class Game extends React.Component {
             questionsLeftUpdate={this.props.questionsLeftUpdate}
             incorrectArrayUpdate={this.props.incorrectArrayUpdate}
             correctArrayUpdate={this.props.correctArrayUpdate}
-            finalTimeUpdate={this.props.finalTimeUpdate}
             inProgressBoolUpdate={this.props.inProgressBollUpdate}
+            timeElapsed={this.props.timeElapsed}
+            questionsLeft={this.props.questionsLeft}
+            numberIncorrectUpdate={this.props.numberIncorrectUpdate}
           />
         </div>
       )
