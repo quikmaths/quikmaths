@@ -11,11 +11,11 @@ class App extends React.Component {
       problemType: '+',
       timeElapsed: 0,
       numberCorrect: 0,
+      numberIncorrect: 0,
       questionsLeft: 0,
-      incorrectArray: [],
+      inProgressBool: false,
       correctArray: [],
-      finalTime: 0,
-      inProgressBool: false
+      incorrectArray: []
     }
   }
 
