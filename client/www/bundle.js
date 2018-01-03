@@ -958,14 +958,6 @@ var _game = __webpack_require__(27);
 
 var _game2 = _interopRequireDefault(_game);
 
-var _navsidebar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/navsidebar.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-var _navsidebar2 = _interopRequireDefault(_navsidebar);
-
-var _infosidebar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/infosidebar.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-var _infosidebar2 = _interopRequireDefault(_infosidebar);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -975,6 +967,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import NavSideBar from './components/navsidebar.jsx'
+// import InfoSideBar from './components/infosidebar.jsx'
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -1097,13 +1092,6 @@ var App = function (_React$Component) {
           null,
           'QuikMaths'
         ),
-        _react2.default.createElement(_navsidebar2.default, {
-          problemType: this.state.problemType,
-          inProgressBool: this.state.inProgressBool,
-          inProgressBoolUpdate: this.inProgressBoolUpdate.bind(this),
-          problemTypeUpdate: this.problemTypeUpdate.bind(this),
-          questionsLeftUpdate: this.questionsLeftUpdate.bind(this)
-        }),
         _react2.default.createElement(_game2.default, {
           problemType: this.state.problemType,
           timeElapsed: this.state.timeElapsed,
@@ -1120,10 +1108,6 @@ var App = function (_React$Component) {
           inProgressBoolUpdate: this.inProgressBoolUpdate.bind(this),
           correctArrayUpdate: this.correctArrayUpdate.bind(this),
           incorrectArrayUpdate: this.incorrectArrayUpdate.bind(this)
-        }),
-        _react2.default.createElement(_infosidebar2.default, {
-          problemType: this.state.problemType,
-          inProgressBool: this.state.inProgressBool
         })
       );
     }
@@ -18545,8 +18529,10 @@ var Game = function (_React$Component) {
             questionsLeftUpdate: this.props.questionsLeftUpdate,
             incorrectArrayUpdate: this.props.incorrectArrayUpdate,
             correctArrayUpdate: this.props.correctArrayUpdate,
-            finalTimeUpdate: this.props.finalTimeUpdate,
-            inProgressBoolUpdate: this.props.inProgressBollUpdate
+            inProgressBoolUpdate: this.props.inProgressBollUpdate,
+            timeElapsed: this.props.timeElapsed,
+            questionsLeft: this.props.questionsLeft,
+            numberIncorrectUpdate: this.props.numberIncorrectUpdate
           })
         );
       }
@@ -18560,9 +18546,94 @@ exports.default = Game;
 
 /***/ }),
 /* 28 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Only one default export allowed per module. (40:0)\n\n\u001b[0m \u001b[90m 38 | \u001b[39m)\n \u001b[90m 39 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 40 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m \u001b[33mAnswer\u001b[39m \n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 41 | \u001b[39m\u001b[0m\n");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Answer = exports.QuestionAnswer = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var QuestionAnswer = function (_React$Component) {
+	_inherits(QuestionAnswer, _React$Component);
+
+	function QuestionAnswer(props) {
+		_classCallCheck(this, QuestionAnswer);
+
+		var _this = _possibleConstructorReturn(this, (QuestionAnswer.__proto__ || Object.getPrototypeOf(QuestionAnswer)).call(this, props));
+
+		_this.state = {
+			questionString: _this.props.questionString,
+			answers: _this.props.answers,
+			correctAnswer: _this.props.correctAnswer
+		};
+		_this.findCorrect = _this.findCorrect.bind(_this);
+		return _this;
+	}
+
+	_createClass(QuestionAnswer, [{
+		key: 'findCorrect',
+		value: function findCorrect(answer) {
+			var correct = false;
+			if (answer === this.state.correctAnswer) {
+				correct = true;
+			}
+
+			this.props.newQuestion();
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'span',
+					null,
+					this.state.question
+				),
+				_react2.default.createElement(
+					'li',
+					null,
+					this.props.answers.map(function (answer, id) {
+						return _react2.default.createElement(Answer, { answer: answer, key: id, findCorrect: _this2.props.findCorrect });
+					})
+				)
+			);
+		}
+	}]);
+
+	return QuestionAnswer;
+}(_react2.default.Component);
+
+exports.QuestionAnswer = QuestionAnswer;
+
+
+var Answer = function Answer(props) {
+	return _react2.default.createElement('button', { onClick: function onClick() {
+			return props.findCorrect(props.answer);
+		} });
+};
+
+exports.Answer = Answer;
 
 /***/ }),
 /* 29 */
