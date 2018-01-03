@@ -21,7 +21,7 @@ class App extends React.Component {
 
   startTimer() {
     // timer adds seconds to timeElapsed as long as game is in progress
-    setTimeout(()=> {
+    setTimeout(() => {
       if (this.state.inProgressBool) {
         this.setState({
           timeElapsed: this.state.timeElapsed + 1
