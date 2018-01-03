@@ -8,14 +8,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      problemType = '+',
-      timeElapsed = 0,
-      numberCorrect = 0,
-      questionsLeft = 0,
-      incorrectArray = [],
-      correctArray = [],
-      finalTime = 0,
-      inProgressBool = false
+      problemType: '+',
+      timeElapsed: 0,
+      numberCorrect: 0,
+      questionsLeft: 0,
+      incorrectArray: [],
+      correctArray: [],
+      finalTime: 0,
+      inProgressBool: false
     }
   }
 
