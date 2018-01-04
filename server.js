@@ -4,13 +4,13 @@ const app = express();
 const path = require('path');
 const bodyparser = require('body-parser');
 const db = require('./db/helpers.js');
-const cookie = require('cookie-parser');
-const passport = require('passport');
-const session = require('express-session');
+// const cookie = require('cookie-parser');
+// const passport = require('passport');
+// const session = require('express-session');
 
 
 app.use(bodyparser.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // Serve up static files
 app.use(express.static(path.join(__dirname, '/client/www')));
@@ -19,13 +19,35 @@ app.use(express.static(path.join(__dirname, '/client/www')));
 app.post('/signup', (req, res) => {
   db.doesUserExist(req.body.username, (exists) => {
     if (exists) {
-      res.json('Username Already Exists');
+      res.json(false);
     } else {
-      db.addNewUser(req.body)
-      res.json('User Account Created');
+      db.addNewUser(req.body, (err, userObj) => {
+        if (err){
+          res.json(false)
+        } else {
+          res.json(userObj)
+        }
+      })
+
     }
   })
 })
+
+
+app.post('/login', (req, res) => {
+  db.getUserByName(req.body.username, (exists) => {
+    if (!exists) {
+      res.json(false);
+    } else {
+      if (req.body.password === exists[0].dataValues.password){
+        res.json(exists[0].dataValues)
+      } else {
+        res.json(false)
+      }
+    }
+  })
+})
+
 
 // returns all information about user that exists in database
 /*

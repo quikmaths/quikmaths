@@ -10,7 +10,6 @@ class SignUp extends React.Component{
 		}
 		this.handleUsername = this.handleUsername.bind(this)
 		this.handlePassword = this.handlePassword.bind(this)
-		this.handleSignUp = this.handleSignUp.bind(this)
 	}
 
 	handleUsername(e){
@@ -32,7 +31,8 @@ class SignUp extends React.Component{
 				<h1>Sign Up!</h1>
 				<p>Username: <input type="text" value={this.state.username} onChange={this.handleUsername}></input></p>
 				<p>Password: <input type="password" value={this.state.password} onChange={this.handlePassword}></input></p>
-				<button onClick={() => this.props.handleSignUp({'username': this.state.username, 'password': this.state.password})>Sign Up</button>
+				<button onClick={() => this.props.handleSignUp({'username': this.state.username, 'password': this.state.password})}>Sign Up</button>
+				<button onClick={this.props.goToLogin}>I have an account!</button>
 			</div>
 		)
 	}

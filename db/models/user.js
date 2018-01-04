@@ -26,6 +26,6 @@ const User = sequelize.define('user', {
   }
 });
 
-User.sync().then(() => User.bulkCreate([{username: 'caio', password: 'none'}]));
+User.sync();
 
 module.exports = User;

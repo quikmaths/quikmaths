@@ -20,20 +20,21 @@ const doesUserExist = function(username, cb) {
 }
 
 
-const addNewUser = function(userInfo) {
+const addNewUser = function(userInfo, cb) {
   doesUserExist(userInfo.username, () => {
     const newUser = User.create({
       "username": userInfo.username,
       "password": userInfo.password
     })
-      .then(() => {
-        console.log('success');
+      .then((user) => {
+        cb(null, {username: user.username, id: user.id})
       })
       .catch(err => {
-        console.log('error: ', err);
+        console.log(err, null);
       })
   })
 }
+
 
 const getUserByName = function(username, cb) {
   User.findAll({
@@ -43,7 +44,7 @@ const getUserByName = function(username, cb) {
   })
   .then(results => {
     if (results.length === 0) {
-      console.log('user does not exist')
+      cb(false)
     } else {
       cb(results);
     }
@@ -63,10 +64,10 @@ const getAllUsers = function(cb) {
 const updateUser = function(userInfo, cb) {
   //get previous user stats
   getUserByName(userInfo.username, function(results){
-    let totalCorrect = results[0].dataValues.totalCorrect,
-    let totalIncorrect = results[0].dataValues.totalIncorrect,
-    let gamesPlayed = results[0].dataValues.gamesPlayed,
-    let highScore = results[0].dataValues.highScore,
+    let totalCorrect = results[0].dataValues.totalCorrect
+    let totalIncorrect = results[0].dataValues.totalIncorrect
+    let gamesPlayed = results[0].dataValues.gamesPlayed
+    let highScore = results[0].dataValues.highScore
     let bestTime = results[0].dataValues.bestTime
 
    //add new users stats to previous user stats
@@ -78,17 +79,16 @@ const updateUser = function(userInfo, cb) {
 
     //update with new stats
     User.update({
-      totalCorrect: newTotalCorrect, 
-      totalIncorrect: newTotalIncorrect, 
-      gamesPlayed: newGamesPlayed, 
-      highScore: newHighScore, 
-      bestTime: newBestTime
-    }).then(() => cb())
+      "totalCorrect": newTotalCorrect, 
+      "totalIncorrect": newTotalIncorrect, 
+      "gamesPlayed": newGamesPlayed, 
+      "highScore": newHighScore, 
+      "bestTime": newBestTime
+    }, {where : {"username": userInfo.username}}).then(() => cb())
   })
 
 }
 
-updateUser({username: 'caio'})
 
 
 const addNewRecord = function(recordInfo) {

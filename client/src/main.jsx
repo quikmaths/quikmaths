@@ -7,6 +7,8 @@ import NavSideBar from './components/navSideBar.jsx';
 import InfoSideBar from './components/infoSideBar.jsx';
 import LeaderBoard from './components/leaderBoard.jsx';
 import UserInfo from './components/userInfo.jsx';
+import Login from './components/login.jsx';
+import SignUp from './components/signUp.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class App extends React.Component {
       incorrectArray: [],
       // states for userinfo
       username: null,
+      userId: null,
       createdAt: null,
       gamesPlayed: null,
       totalCorrect: null,
@@ -32,7 +35,8 @@ class App extends React.Component {
       // array of leaderboard records
       recordsList: [],
       // render login page conditionally
-      isLoggedIn: false
+      isLoggedIn: false,
+      isSignedUp: true
     }
     this.AppStyle = {
       display: 'grid',
@@ -55,6 +59,11 @@ class App extends React.Component {
       gridColumn: '2/4',
       gridRow: '2/5'
     }
+
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.goToSignUp = this.goToSignUp.bind(this);
+    this.goToLogin = this.goToLogin.bind(this);
   }
 
   startTimer() {
@@ -170,48 +179,100 @@ class App extends React.Component {
     });
   }
 
+  handleSignUp(obj){
+    axios.post('/signup', obj)
+         .then((result) => {
+            if(result.data === false) {
+               alert('username already exists');
+            } else {
+              console.log('signup this', this)
+               this.setState({"isLoggedIn" : true, 
+                              "username" : result.data.username, 
+                              "userId" : result.data.id}) 
+            }
+          })
+  }
+
+  handleLogin(obj) {
+    axios.post('/login', obj)
+         .then((result) => {
+            if (result.data === false) {
+              alert('Please try again or Create New Account');
+            } else {
+              this.setState({"isSignedUp": true, 
+                            "isLoggedIn": true, 
+                            "username": result.data.username, 
+                            "userId": result.data.id
+                          })
+            }
+         })
+  }
+
+  goToSignUp(){
+    this.setState({
+      isSignedUp : false
+    })
+  }
+
+  goToLogin(){
+    this.setState({
+      isSignedUp : true
+    })
+  }
+
+
   render() {
-    return (
-      <div style={this.AppStyle}>
-        <NavTopBar
-          getUserInfo={this.getUserInfo.bind(this)}
-          getLeaderBoard={this.getLeaderBoard.bind(this)}
-        />
-        <UserInfo/>
-        <LeaderBoard/>
-        <NavSideBar
-          style={this.NavSideBarStyle}
-          inProgressBool = {this.state.inProgressBool}
-          startNewGame= {this.startNewGame.bind(this)}
-          inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
-          problemTypeUpdate = {this.problemTypeUpdate.bind(this)}
-          questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
-        />
-        <Game
-          style={this.GameStyle}
-          problemType = {this.state.problemType}
-          timeElapsed = {this.state.timeElapsed}
-          numberCorrect = {this.state.numberCorrect}
-          numberIncorrect = {this.state.numberIncorrect}
-          questionsLeft = {this.state.questionsLeft}
-          inProgressBool = {this.state.inProgressBool}
-          correctArray = {this.state.correctArray}
-          incorrectArray = {this.state.incorrectArray}
-          numberCorrectUpdate = {this.numberCorrectUpdate.bind(this)}
-          numberIncorrectUpdate = {this.numberIncorrectUpdate.bind(this)}
-          resetCounts = {this.resetCounts.bind(this)}
-          questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
-          inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
-          correctArrayUpdate = {this.correctArrayUpdate.bind(this)}
-          incorrectArrayUpdate = {this.incorrectArrayUpdate.bind(this)}
-        />
-        <InfoSideBar
-          style={this.InfoSideBarStyle}
-          problemType = {this.state.problemType}
-          inProgressBool = {this.state.inProgressBool}
-        />
-      </div>
-    )
+    if (this.state.isLoggedIn === false && this.state.isSignedUp === true) {
+      return (
+        <Login handleLogin={this.handleLogin} goToSignUp={this.goToSignUp}/>
+      )
+    } else if (this.state.isLoggedIn === false && this.state.isSignedUp === false) {
+      return (
+        <SignUp handleSignUp={this.handleSignUp} goToLogin={this.goToLogin}/>
+      )
+    } else {
+      return (
+        <div style={this.AppStyle}>
+          <NavTopBar
+            getUserInfo={this.getUserInfo.bind(this)}
+            getLeaderBoard={this.getLeaderBoard.bind(this)}
+          />
+          <UserInfo/>
+          <LeaderBoard/>
+          <NavSideBar
+            style={this.NavSideBarStyle}
+            inProgressBool = {this.state.inProgressBool}
+            startNewGame= {this.startNewGame.bind(this)}
+            inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
+            problemTypeUpdate = {this.problemTypeUpdate.bind(this)}
+            questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
+          />
+          <Game
+            style={this.GameStyle}
+            problemType = {this.state.problemType}
+            timeElapsed = {this.state.timeElapsed}
+            numberCorrect = {this.state.numberCorrect}
+            numberIncorrect = {this.state.numberIncorrect}
+            questionsLeft = {this.state.questionsLeft}
+            inProgressBool = {this.state.inProgressBool}
+            correctArray = {this.state.correctArray}
+            incorrectArray = {this.state.incorrectArray}
+            numberCorrectUpdate = {this.numberCorrectUpdate.bind(this)}
+            numberIncorrectUpdate = {this.numberIncorrectUpdate.bind(this)}
+            resetCounts = {this.resetCounts.bind(this)}
+            questionsLeftUpdate = {this.questionsLeftUpdate.bind(this)}
+            inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}
+            correctArrayUpdate = {this.correctArrayUpdate.bind(this)}
+            incorrectArrayUpdate = {this.incorrectArrayUpdate.bind(this)}
+          />
+          <InfoSideBar
+            style={this.InfoSideBarStyle}
+            problemType = {this.state.problemType}
+            inProgressBool = {this.state.inProgressBool}
+          />
+        </div>
+      )
+    }
   }
 }
 
