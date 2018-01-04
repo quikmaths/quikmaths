@@ -19,7 +19,20 @@ class App extends React.Component {
       questionsLeft: 0,
       inProgressBool: false,
       correctArray: [],
-      incorrectArray: []
+      incorrectArray: [],
+      // states for userinfo
+      username: null,
+      createdAt: null,
+      gamesPlayed: null,
+      totalCorrect: null,
+      totalIncorrect: null,
+      highScore: null,
+      bestTime: null,
+      // correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
+      // array of leaderboard records
+      recordsList: [],
+      // render login page conditionally
+      isLoggedIn: false
     }
     this.AppStyle = {
       display: 'grid',
@@ -79,10 +92,6 @@ class App extends React.Component {
     })
   }
 
-  saveRecord() {
-
-  }
-
   numberCorrectUpdate() {
     this.setState({
       numberCorrect: this.state.numberCorrect + 1
@@ -132,10 +141,42 @@ class App extends React.Component {
     this.inProgressBoolUpdate()
   }
 
+  getUserInfo() {
+    console.log('getting user info')
+    axios.post('/userRecords', {
+      username: 'username',
+      operator: null,
+      ascending: false
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  
+  getLeaderBoard() {
+    console.log('getting records')
+    axios.post('/allRecords', {
+        operator: undefined,
+        ascending: false
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   render() {
     return (
       <div style={this.AppStyle}>
-        <NavTopBar/>
+        <NavTopBar
+          getUserInfo={this.getUserInfo.bind(this)}
+          getLeaderBoard={this.getLeaderBoard.bind(this)}
+        />
         <UserInfo/>
         <LeaderBoard/>
         <NavSideBar

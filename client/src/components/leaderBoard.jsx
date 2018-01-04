@@ -1,23 +1,32 @@
 import React from 'react'
+import axios from 'axios';
 
 class LeaderBoard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      time: null,
-      numberCorrect: null,
-      numberIncorrect: null,
-      score: null,
-      operator: null,
-      username: null
-    }
-  }
-  getLeaderboard() {
-    
   }
   render() {
     return (
-      <div>Leaderboard</div>
+      <div>
+        <h4>Leaderboard</h4>
+        <ul>
+          <li>
+            placeholder record
+          </li>
+          <li>
+            placeholder record
+          </li>
+          <li>
+            placeholder record
+          </li>
+          <li>
+            placeholder record
+          </li>
+          {/* {this.props.LeaderBoard.map((record, i)=> {
+            return (<li key={i}>{record}</li>)
+          })} */}
+        </ul>
+      </div>
     )
   }
 }
