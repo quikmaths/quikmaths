@@ -6,25 +6,48 @@ class QuestionAnswer extends React.Component {
 		this.state = {
 			questionString: this.props.questionString, 
 			answers: this.props.answers, 
-			correctAnswer: this.props.correctAnswer
+			correctAnswer: this.props.correctAnswer,
+			questionsLeft: this.props.questionsLeft,
+			timeElapsed: this.props.timeElapsed
 		}
 		this.findCorrect = this.findCorrect.bind(this)
 	}
 
-	findCorrect(answer){
-		var correct = false
+	componentDidMount(){
+		this.props.inProgressBoolUpdate()
+	}
+
+
+	findCorrect(answer, question){
 		if (answer === this.state.correctAnswer){
-			correct = true
+			this.props.correctArrayUpdate(question)
+			this.props.numberCorrectUpdate()
+			this.props.questionsLeftUpdate()
+		} else {
+			this.props.incorrectArrayUpdate(question)
+			this.props.numberIncorrectUpdate()
+			this.props.questionsLeftUpdate()
+		}
+
+		if (this.state.questionsLeft === 0){
+			this.props.inProgressBoolUpdate()
 		}
 
 		this.props.newQuestion()
 	}
 
+
+
 	render(){
 		return(
 			<div>
 				<span>{this.state.question}</span>
-				<li>{this.props.answers.map((answer, id) => <Answer answer={answer} key={id} findCorrect={this.props.findCorrect} />)}</li>
+				<li>{this.state.answers.map((answer, id) => <Answer question={this.state.questionString} 
+																														answer={answer} 
+																														key={id} 
+																														findCorrect={this.props.findCorrect} />)}</li>
+				<span>{this.state.timeElapsed}</span>
+				<span>Questions Left: {this.questionsLeft}</span>
 			</div>
 		)
 	}
@@ -34,7 +57,7 @@ export {QuestionAnswer}
 
 
 const Answer = (props) => (
-	<button onClick={() => props.findCorrect(props.answer)}></button>
+	<button onClick={() => props.findCorrect(props.answer, props.question)}></button>
 )
 
 export {Answer}

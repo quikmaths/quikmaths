@@ -965,16 +965,16 @@ var _navSideBar2 = _interopRequireDefault(_navSideBar);
 var _infoSideBar = __webpack_require__(32);
 
 var _infoSideBar2 = _interopRequireDefault(_infoSideBar);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import NavSideBar from './components/navSideBar.jsx'
+// import InfoSideBar from './components/infoSideBar.jsx'
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -1081,9 +1081,10 @@ var App = function (_React$Component) {
   }, {
     key: 'resetCounts',
     value: function resetCounts() {
-      this.setState(_defineProperty({
-        numberIncorrect: 0
-      }, 'numberIncorrect', 0));
+      this.setState({
+        numberIncorrect: 0,
+        numberCorrect: 0
+      });
     }
   }, {
     key: 'questionsLeftUpdate',
@@ -1133,6 +1134,7 @@ var App = function (_React$Component) {
           problemTypeUpdate: this.problemTypeUpdate.bind(this),
           questionsLeftUpdate: this.questionsLeftUpdate.bind(this)
         }),
+
         _react2.default.createElement(_game2.default, {
           style: this.GameStyle,
           problemType: this.state.problemType,
@@ -18576,8 +18578,10 @@ var Game = function (_React$Component) {
             questionsLeftUpdate: this.props.questionsLeftUpdate,
             incorrectArrayUpdate: this.props.incorrectArrayUpdate,
             correctArrayUpdate: this.props.correctArrayUpdate,
-            finalTimeUpdate: this.props.finalTimeUpdate,
-            inProgressBoolUpdate: this.props.inProgressBollUpdate
+            inProgressBoolUpdate: this.props.inProgressBollUpdate,
+            timeElapsed: this.props.timeElapsed,
+            questionsLeft: this.props.questionsLeft,
+            numberIncorrectUpdate: this.props.numberIncorrectUpdate
           })
         );
       }
@@ -18603,7 +18607,8 @@ exports.Answer = exports.QuestionAnswer = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(0);
+
+var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -18627,17 +18632,33 @@ var QuestionAnswer = function (_React$Component) {
 			questionString: _this.props.questionString,
 			answers: _this.props.answers,
 			correctAnswer: _this.props.correctAnswer
+
 		};
 		_this.findCorrect = _this.findCorrect.bind(_this);
 		return _this;
 	}
 
 	_createClass(QuestionAnswer, [{
+
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.props.inProgressBoolUpdate();
+		}
+	}, {
 		key: 'findCorrect',
-		value: function findCorrect(answer) {
-			var correct = false;
+		value: function findCorrect(answer, question) {
 			if (answer === this.state.correctAnswer) {
-				correct = true;
+				this.props.correctArrayUpdate(question);
+				this.props.numberCorrectUpdate();
+				this.props.questionsLeftUpdate();
+			} else {
+				this.props.incorrectArrayUpdate(question);
+				this.props.numberIncorrectUpdate();
+				this.props.questionsLeftUpdate();
+			}
+
+			if (this.state.questionsLeft === 0) {
+				this.props.inProgressBoolUpdate();
 			}
 
 			this.props.newQuestion();
@@ -18658,9 +18679,24 @@ var QuestionAnswer = function (_React$Component) {
 				_react2.default.createElement(
 					'li',
 					null,
-					this.props.answers.map(function (answer, id) {
-						return _react2.default.createElement(Answer, { answer: answer, key: id, findCorrect: _this2.props.findCorrect });
+
+					this.state.answers.map(function (answer, id) {
+						return _react2.default.createElement(Answer, { question: _this2.state.questionString,
+							answer: answer,
+							key: id,
+							findCorrect: _this2.props.findCorrect });
 					})
+				),
+				_react2.default.createElement(
+					'span',
+					null,
+					this.state.timeElapsed
+				),
+				_react2.default.createElement(
+					'span',
+					null,
+					'Questions Left: ',
+					this.questionsLeft
 				)
 			);
 		}
@@ -18674,7 +18710,8 @@ exports.QuestionAnswer = QuestionAnswer;
 
 var Answer = function Answer(props) {
 	return _react2.default.createElement('button', { onClick: function onClick() {
-			return props.findCorrect(props.answer);
+
+			return props.findCorrect(props.answer, props.question);
 		} });
 };
 

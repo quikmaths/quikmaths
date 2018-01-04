@@ -5,7 +5,6 @@ import NavSideBar from './components/navSideBar.jsx';
 import InfoSideBar from './components/infoSideBar.jsx';
 
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -101,7 +100,7 @@ class App extends React.Component {
   resetCounts() {
     this.setState({
       numberIncorrect: 0,
-      numberIncorrect: 0
+      numberCorrect: 0
     })
   }
 
