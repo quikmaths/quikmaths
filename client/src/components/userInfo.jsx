@@ -11,8 +11,14 @@ class UserInfo extends React.Component {
       totalIncorrect: null,
       highScore: null,
       bestTime: null,
-      correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
+      // correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
     }
+  }
+
+  render() {
+    return (
+      <div>User Info</div>
+    )
   }
   
 }
