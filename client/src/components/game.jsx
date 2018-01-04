@@ -43,6 +43,36 @@ class Game extends React.Component {
     })
   }
 
+
+  determineHighScore (time, correctAnswers, incorrectAnswers) {
+    let answerRatio = correctAnswers / incorrectAnswers
+    let preTotal = answerRatio -= time
+    let timePenalty = 3 * incorrectAnswers
+    var totalScore
+
+      if (time <= 200 && time > 150) {
+        correctAnswers = correctAnswers - timePenalty
+      } else if (time <= 150 && time > 100) {
+        correctAnswers = correctAnswers * 3 - timePenalty
+      } else if (time <= 100 && time > 60) {
+        correctAnswers = correctAnswers * 8 - timePenalty
+      } else if (time <= 60 && time > 30) {
+        correctAnswers = correctAnswers * 10 
+      } else if (time <= 30 && correctAnswers !== 20) {
+        correctAnswers = correctAnswers * 12
+      } else if (correctAnswers === 20) {
+        let totalScore = 300000
+        if (time > 30) {
+          totalScore = totalScore - time
+        }
+      }
+    var totalScore = Math.floor((preTotal + correctAnswers + 30) * 100)
+    if (totalScore >= 300000) {
+      totalScore = 300000
+    }
+    return totalScore < 0 ? 0 : totalScore;
+  }
+
   render() {
     if (this.props.questionsLeft === 0) {
       return (
