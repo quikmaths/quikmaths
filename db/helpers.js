@@ -108,6 +108,16 @@ const getAllRecordsForOperator = function(operator, cb) {
     })
 }
 
+const getAllRecords = function(cb) {
+  Record.findAll()
+    .then(results => {
+      cb(results);
+    })
+    .catch(err => {
+      console.log('error: ', err);
+    })
+} 
+
 
 // manipulating data
 const sortRecordsByScore = function(descending, cb) {
@@ -127,5 +137,6 @@ module.exports = {
   getAllRecordsForUser : getAllRecordsForUser,
   getAllRecordsForOperator : getAllRecordsForOperator,
   sortRecordsByScore : sortRecordsByScore,
-  sortRecordsByTime : sortRecordsByTime
+  sortRecordsByTime : sortRecordsByTime,
+  getAllRecords : getAllRecords
 }
