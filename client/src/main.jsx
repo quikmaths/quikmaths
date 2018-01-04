@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
 import Game from './components/game.jsx';
 import NavSideBar from './components/navSideBar.jsx';
 import InfoSideBar from './components/infoSideBar.jsx';
 
-=======
-import Game from './components/game.jsx'
-// import NavSideBar from './components/navSideBar.jsx'
-// import InfoSideBar from './components/infoSideBar.jsx'
->>>>>>> QuestionAnswer component functional( bare min)
 
 class App extends React.Component {
   constructor(props) {
