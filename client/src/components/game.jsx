@@ -2,6 +2,7 @@ import React from 'react'
 import QuestionAnswer from './questionAnswer.jsx'
 import Statistics from './statistics.jsx'
 import questionGen from '../../../problemGen.js'
+import axios from 'axios'
 
 const problemType = {
   '+': 'Addition',
@@ -44,7 +45,7 @@ class Game extends React.Component {
   }
 
 
-  determineHighScore (time, correctAnswers, incorrectAnswers) {
+  determineNewScore (time, correctAnswers, incorrectAnswers) {
     let answerRatio = correctAnswers / incorrectAnswers
     let preTotal = answerRatio -= time
     let timePenalty = 3 * incorrectAnswers
@@ -72,8 +73,35 @@ class Game extends React.Component {
     }
     return totalScore < 0 ? 0 : totalScore;
   }
+//create a function that sends new post request to server
+//check all fields that are required
+  saveNewScore () {
+    let newScore = this.determineNewScore(
+      this.state.finalTime,
+      this.props.numberCorrect,
+      this.props.numberIncorrect
+    )
+    axios.post('/newRecord', (req, res) => {
+      res.send({
+        'time': this.state.finalTime,
+        'numberCorrect': this.props.numberCorrect,
+        'numberIncorrect': this.props.numberIncorrect,
+        'score': newScore,
+        'userId': userId,
+        'operator': this.state.problemType
+      })
+    })
+  }
+
+
+
+
 
   render() {
+
+
+
+
     if (this.props.questionsLeft === 0) {
       return (
         <Statistics 
@@ -101,6 +129,7 @@ class Game extends React.Component {
             questionsLeft={this.props.questionsLeft}
             numberIncorrectUpdate={this.props.numberIncorrectUpdate}
             finalTimeUpdate={this.finalTimeUpdate}
+            saveNewScore={this.saveNewScore}
           />
         </div>
       )
