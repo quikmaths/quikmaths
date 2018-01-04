@@ -15,13 +15,20 @@ class NavTopBar extends React.Component {
 
   render(){
     return (
-      <div>Navbar Top
+      <div>
+        <h4>
+          NavbarTop
+        </h4>
         <ul>
           <li>
-            <button>User</button>
+            <button onClick={()=> {
+              this.props.getUserInfo()
+            }}>User</button>
           </li>
           <li>
-            <button>Leaderboards</button>
+            <button onClick={()=> {
+              this.props.getLeaderBoard()
+            }}>LeaderBoard</button>
           </li>
         </ul>
       </div>
