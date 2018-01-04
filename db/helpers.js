@@ -34,7 +34,7 @@ const addNewUser = function(userInfo) {
       })
   })
 }
-// get userByName
+
 const getUserByName = function(username, cb) {
   User.findAll({
     where: {
@@ -60,9 +60,59 @@ const getAllUsers = function(cb) {
       })
 }
 
-// update user
+const updateUser = function(userInfo) {
 
-// add new record
-// get all records for a user
-// get all records for an operator
-// get all records sorted by score
+}
+
+
+const addNewRecord = function(recordInfo) {
+  const newRecord = Record.build({
+    "time": recordInfo.time,
+    "numberCorrect": recordInfo.numberCorrect,
+    "numberIncorrect": recordInfo.numberIncorrect,
+    "score": recordInfo.score,
+    "userId": recordInfo.userId,
+    "operate": recordInfo.operator
+  })
+    .save()
+    .then()
+    .catch(err => {
+      console.log('error: ', err);
+    })
+}
+
+const getAllRecordsForUser = function(userId, cb) {
+  Record.findAll({
+    where: {
+      "userId": userId
+    }
+  })
+    .then(results => {
+      cb(results)
+    })
+    .catch(err => {
+      console.log('error: ', err);
+    })
+}
+
+const getAllRecordsForOperator = function(operator, cb) {
+  Record.findAll({
+    where: {
+      "operator": operator
+    }
+  })
+    .then(results => {
+      cb(results);
+    })
+    .catch(err => {
+      console.log('error: ', err);
+    })
+}
+
+const sortRecordsByScore = function(descending, cb) {
+
+}
+
+const sortRecordsByTime = function(descending, cb) {
+
+}
