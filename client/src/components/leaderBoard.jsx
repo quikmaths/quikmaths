@@ -12,6 +12,14 @@ class LeaderBoard extends React.Component {
       username: null
     }
   }
+  getLeaderboard() {
+    
+  }
+  render() {
+    return (
+      <div>Leaderboard</div>
+    )
+  }
 }
 
 export default LeaderBoard;

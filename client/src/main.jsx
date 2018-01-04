@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Game from './components/game.jsx';
+import NavTopBar from './components/navTopBar.jsx';
 import NavSideBar from './components/navSideBar.jsx';
 import InfoSideBar from './components/infoSideBar.jsx';
+import LeaderBoard from './components/leaderBoard.jsx';
+import UserInfo from './components/userInfo.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,24 +23,24 @@ class App extends React.Component {
     }
     this.AppStyle = {
       display: 'grid',
-      gridTemplateColumns: '1fr 3fr 1fr',
+      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
       gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
       fontFamily: 'Poppins',
       padding: '10px'
     }
-    this.NavBarStyle = {
+    this.NavSideBarStyle = {
       gridColumn: '1',
-      gridRow: '1/5'
+      gridRow: '2/5'
     }
     this.InfoSideBarStyle = {
-      gridColumn: '4/5',
-      gridRow: '1/5',
+      gridColumn: '5',
+      gridRow: '2/5',
       fontFamily: 'Poppins',
       backgroundColor: 'gray'
     }
     this.GameStyle = {
       gridColumn: '2/4',
-      gridRow: '1/5'
+      gridRow: '2/5'
     }
   }
 
@@ -132,8 +135,11 @@ class App extends React.Component {
   render() {
     return (
       <div style={this.AppStyle}>
-         <NavSideBar
-          style={this.NavBarStyle}
+        <NavTopBar/>
+        <UserInfo/>
+        <LeaderBoard/>
+        <NavSideBar
+          style={this.NavSideBarStyle}
           inProgressBool = {this.state.inProgressBool}
           startNewGame= {this.startNewGame.bind(this)}
           inProgressBoolUpdate = {this.inProgressBoolUpdate.bind(this)}

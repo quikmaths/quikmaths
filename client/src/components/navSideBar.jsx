@@ -21,9 +21,7 @@ class NavSideBar extends React.Component {
     } else {
       return (
           <div style={this.style}>
-          <div>
             <h1>QUIKMATHS</h1>
-          </div>
             CHOOSE YOUR PATH:
             <h2 style={this.selectStyle} onClick={() => {this.props.startNewGame('+')}}>Addition</h2>
             <h2 style={this.selectStyle} onClick={() => {this.props.startNewGame('-')}}>Subtraction</h2>
@@ -36,8 +34,5 @@ class NavSideBar extends React.Component {
   }
 
 }
-
-
-
 
 export default NavSideBar;
