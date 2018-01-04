@@ -15,7 +15,7 @@ class Statistics extends React.Component {
           </ul>
         <h2>Correct Questions</h2>
           <ul>
-            {this.props.incorrectArray.map((correctQuestion, index) => {
+            {this.props.correctArray.map((correctQuestion, index) => {
               return <li key={index}>{correctQuestion}</li>
             })}
           </ul>

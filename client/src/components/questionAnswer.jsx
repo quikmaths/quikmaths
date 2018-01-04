@@ -4,28 +4,20 @@ class QuestionAnswer extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			questionString: '' + this.props.questionString[1] + this.props.questionString[0] + this.props.questionString[2], 
-			answers: this.props.answers, 
-			correctAnswer: this.props.correctAnswer,
-			questionsLeft: this.props.questionsLeft,
-			timeElapsed: this.props.timeElapsed
+			questionsLeft: this.props.questionsLeft
 		}
 		this.findCorrect = this.findCorrect.bind(this)
 	}
 
-	componentDidMount(){
-		this.props.inProgressBoolUpdate()
-	}
-
 
 	findCorrect(answer, question){
-		if (this.state.questionsLeft === 1){
+		if (this.props.questionsLeft === 1){
 			this.props.inProgressBoolUpdate()
 		} else {
 			this.props.newQuestion()
 		}
 
-		if (answer === this.state.correctAnswer){
+		if (answer === this.props.correctAnswer){
 			this.props.correctArrayUpdate(question)
 			this.props.numberCorrectUpdate()
 			this.props.questionsLeftUpdate()
@@ -35,16 +27,14 @@ class QuestionAnswer extends React.Component {
 			this.props.questionsLeftUpdate()
 		}
 
-
 	}
-
 
 
 	render(){
 		return(
 			<div>
-				<div>{this.state.questionString}</div>
-				<div>{this.state.answers.map((answer, id) => <Answer question={this.state.questionString} 
+				<div>{this.props.questionString}</div>
+				<div>{this.props.answers.map((answer, id) => <Answer question={this.props.questionString} 
 																														answer={answer} 
 																														key={id} 
 																														findCorrect={this.findCorrect} />)}</div>

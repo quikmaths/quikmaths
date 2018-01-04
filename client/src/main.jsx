@@ -105,6 +105,9 @@ class App extends React.Component {
   }
 
   questionsLeftUpdate() {
+    if (this.questionsLeft === 1){
+
+    }
     this.setState({
       questionsLeft: this.state.questionsLeft - 1
     })
@@ -126,15 +129,18 @@ class App extends React.Component {
   }
 
   startNewGame(operator) {
-    this.problemTypeUpdate(operator)
-    this.isProgressBoolUpdate()
+    this.setState({
+      questionsLeft: 20, 
+      problemType: operator
+    })
     this.resetCounts()
+    this.inProgressBoolUpdate()
+
   }
 
   render() {
     return (
       <div style={this.AppStyle}>
-      
          <NavSideBar
           style={this.NavBarStyle}
           inProgressBool = {this.state.inProgressBool}
