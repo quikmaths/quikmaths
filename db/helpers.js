@@ -9,39 +9,15 @@ const doesUserExist = function(username, cb) {
   })
   .then(results => {
     if (results.length === 0) {
-<<<<<<< HEAD
       cb(false)
     } else {
       cb(true);
-=======
-      cb()
-    } else {
-      console.log('user already exists');
->>>>>>> added updateUser function to db/helpers.js
     }
   })
   .catch(err => {
     console.log('error:', err)
   })
 }
-<<<<<<< HEAD
-=======
-
-const addNewUser = function(userInfo) {
-  doesUserExist(userInfo.username, () => {
-    const newUser = User.create({
-      "username": userInfo.username,
-      "password": userInfo.password
-    })
-      .then(() => {
-        console.log('success');
-      })
-      .catch(err => {
-        console.log('error: ', err);
-      })
-  })
-}
->>>>>>> added updateUser function to db/helpers.js
 
 const addNewUser = function(userInfo) {
   doesUserExist(userInfo.username, () => {
