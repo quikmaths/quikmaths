@@ -3,7 +3,6 @@ import QuestionAnswer from './questionAnswer.jsx'
 import Statistics from './statistics.jsx'
 import questionGen from '../../../problemGen.js'
 
-
 const problemType = {
   '+': 'Addition',
   '-': 'Subtraction',
@@ -14,30 +13,35 @@ const problemType = {
 class Game extends React.Component {
   constructor(props) {
     super(props) 
+    // finaltime is state in game component instead of prop
       this.state = {
+        finalTime: 0,
         questionString: [],
         answers: [],
         correctAnswer: undefined,
-        questionsLeft: this.props.questionsLeft
       }
-
     this.newQuestion = this.newQuestion.bind(this);
+    this.finalTimeUpdate = this.finalTimeUpdate.bind(this);
   }
 
   componentWillMount(){
     this.newQuestion()
   }
 
-
   newQuestion() {
     let infoObject = questionGen(this.props.problemType, 3, 1);
     this.setState({
-      questionString: `${infoObject.question[1]}    ${infoObject.question[0]}     ${infoObject.question[2]}`,
+      questionString: `${infoObject.question[1]} ${infoObject.question[0]} ${infoObject.question[2]}`,
       answers: infoObject.choices,
       correctAnswer: infoObject.correctAnswer
     })
   }
 
+  finalTimeUpdate() {
+    this.setState({
+      finalTime: this.props.timeElapsed
+    })
+  }
 
   render() {
     if (this.props.questionsLeft === 0) {
@@ -46,7 +50,7 @@ class Game extends React.Component {
           numberCorrect={this.props.numberCorrect}
           incorrectArray={this.props.incorrectArray}
           correctArray={this.props.correctArray}
-          finalTime={this.props.finalTime}
+          finalTime={this.state.finalTime}
         />
       )
     } else {
@@ -66,6 +70,7 @@ class Game extends React.Component {
             timeElapsed={this.props.timeElapsed}
             questionsLeft={this.props.questionsLeft}
             numberIncorrectUpdate={this.props.numberIncorrectUpdate}
+            finalTimeUpdate={this.finalTimeUpdate}
           />
         </div>
       )

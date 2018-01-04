@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import Game from './components/game.jsx';
 import NavSideBar from './components/navSideBar.jsx';
 import InfoSideBar from './components/infoSideBar.jsx';
-
 
 class App extends React.Component {
   constructor(props) {
@@ -25,28 +25,20 @@ class App extends React.Component {
       fontFamily: 'Poppins',
       padding: '10px'
     }
-
     this.NavBarStyle = {
       gridColumn: '1',
       gridRow: '1/5'
     }
-
     this.InfoSideBarStyle = {
       gridColumn: '4/5',
       gridRow: '1/5',
       fontFamily: 'Poppins',
       backgroundColor: 'gray'
-      
     }
-
     this.GameStyle = {
       gridColumn: '2/4',
       gridRow: '1/5'
     }
-
-
-
-
   }
 
   startTimer() {
@@ -72,17 +64,20 @@ class App extends React.Component {
     // use to start and stop games
     this.setState({
       inProgressBool: !this.state.inProgressBool,
+    }, ()=> {
+      if (this.state.inProgressBool) {
+        this.startTimer()
+      } else {
+        this.saveRecord()
+        this.setState({
+          timeElapsed: 0
+        })
+      }
     })
-    if (this.inProgressBool) {
-      this.startTimer()
-    } else {
-      // insert database save here
-        // number correct, number incorrect, timeElapsed
-      // save data then reset timeElapsed
-      this.setState({
-        timeElapsed: 0
-      })
-    }
+  }
+
+  saveRecord() {
+
   }
 
   numberCorrectUpdate() {
@@ -105,9 +100,6 @@ class App extends React.Component {
   }
 
   questionsLeftUpdate() {
-    if (this.questionsLeft === 1){
-
-    }
     this.setState({
       questionsLeft: this.state.questionsLeft - 1
     })
@@ -130,12 +122,11 @@ class App extends React.Component {
 
   startNewGame(operator) {
     this.setState({
-      questionsLeft: 20, 
+      questionsLeft: 10, 
       problemType: operator
     })
     this.resetCounts()
     this.inProgressBoolUpdate()
-
   }
 
   render() {
