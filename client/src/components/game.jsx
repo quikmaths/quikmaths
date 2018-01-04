@@ -47,7 +47,6 @@ class Game extends React.Component {
   determineHighScore (time, correctAnswers, incorrectAnswers) {
     let answerRatio = correctAnswers / incorrectAnswers
     let preTotal = answerRatio -= time
-    let stringTime = time.toString()
     let timePenalty = 3 * incorrectAnswers
     var totalScore
 
