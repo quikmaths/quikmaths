@@ -109,6 +109,8 @@ const getAllRecordsForOperator = function(operator, cb) {
     })
 }
 
+
+// manipulating data
 const sortRecordsByScore = function(descending, cb) {
 
 }
