@@ -30,6 +30,10 @@ class NavTopBar extends React.Component {
               this.props.getLeaderBoard()
             }}>LeaderBoard</button>
           </li>
+          <li>
+            <button onClick={()=> {
+            }}>Tutorial</button>
+          </li>
         </ul>
       </div>
     )
