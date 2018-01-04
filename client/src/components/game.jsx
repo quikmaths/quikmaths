@@ -25,8 +25,7 @@ class Game extends React.Component {
       this.state = {
         questionString: '',
         answers: [],
-        correctAnswer: undefined,
-        questionsLeft: this.props.questionsLeft
+        correctAnswer: undefined
       }
 >>>>>>> edef615ff4fbe1667530204a91a7b518d0e69c5a
 
