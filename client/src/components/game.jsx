@@ -1,6 +1,6 @@
 import React from 'react'
-import QuestionAnswer from './QuestionAnswer.jsx'
-import Statistics from './Statistics.jsx'
+import QuestionAnswer from './questionAnswer.jsx'
+import Statistics from './statistics.jsx'
 import questionGen from '../../../problemGen.js'
 
 
@@ -13,28 +13,42 @@ const problemType = {
 
 class Game extends React.Component {
   constructor(props) {
+<<<<<<< HEAD
     super(props)
     this.state = {
       questionString: '',
       answers: [],
       correctAnswer: undefined
     }
+=======
+    super(props) 
+      this.state = {
+        questionString: '',
+        answers: [],
+        correctAnswer: undefined
+      }
+>>>>>>> edef615ff4fbe1667530204a91a7b518d0e69c5a
 
     this.newQuestion = this.newQuestion.bind(this);
   }
 
+  componentWillMount(){
+    this.newQuestion()
+  }
+
   newQuestion() {
-    let infoObject = questionGen(this.props.problemType, 1, 3);
+    let infoObject = questionGen(this.props.problemType, 3, 1);
     
     this.setState({
       questionString: infoObject.question,
       answers: infoObject.choices,
-      correctAnswer: correctAnswer
+      correctAnswer: infoObject.correctAnswer
     })
   }
 
+
   render() {
-    if (this.props.questionsLeft === 0) {
+    if (this.state.questionsLeft === 0) {
       return (
         <Statistics 
           numberCorrect={this.props.numberCorrect}
@@ -56,7 +70,7 @@ class Game extends React.Component {
             questionsLeftUpdate={this.props.questionsLeftUpdate}
             incorrectArrayUpdate={this.props.incorrectArrayUpdate}
             correctArrayUpdate={this.props.correctArrayUpdate}
-            inProgressBoolUpdate={this.props.inProgressBollUpdate}
+            inProgressBoolUpdate={this.props.inProgressBoolUpdate}
             timeElapsed={this.props.timeElapsed}
             questionsLeft={this.props.questionsLeft}
             numberIncorrectUpdate={this.props.numberIncorrectUpdate}
