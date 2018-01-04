@@ -67,7 +67,7 @@ class App extends React.Component {
     // use to start and stop games
     this.setState({
       inProgressBool: !this.state.inProgressBool,
-    }, ()=> {
+    }, () => {
       if (this.state.inProgressBool) {
         this.startTimer()
       } else {

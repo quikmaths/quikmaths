@@ -4,8 +4,13 @@ const app = express();
 const path = require('path');
 const bodyparser = require('body-parser');
 const db = require('./db/helpers.js');
+const cookie = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+
 
 app.use(bodyparser.json());
+app.use(cookieParser());
 
 // Serve up static files
 app.use(express.static(path.join(__dirname, '/client/www')));
