@@ -4,7 +4,7 @@ class QuestionAnswer extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			questionString: this.props.questionString, 
+			questionString: '' + this.props.questionString[1] + this.props.questionString[0] + this.props.questionString[2], 
 			answers: this.props.answers, 
 			correctAnswer: this.props.correctAnswer,
 			questionsLeft: this.props.questionsLeft,
@@ -19,6 +19,12 @@ class QuestionAnswer extends React.Component {
 
 
 	findCorrect(answer, question){
+		if (this.state.questionsLeft === 1){
+			this.props.inProgressBoolUpdate()
+		} else {
+			this.props.newQuestion()
+		}
+
 		if (answer === this.state.correctAnswer){
 			this.props.correctArrayUpdate(question)
 			this.props.numberCorrectUpdate()
@@ -29,11 +35,7 @@ class QuestionAnswer extends React.Component {
 			this.props.questionsLeftUpdate()
 		}
 
-		if (this.state.questionsLeft === 0){
-			this.props.inProgressBoolUpdate()
-		}
 
-		this.props.newQuestion()
 	}
 
 
@@ -41,23 +43,27 @@ class QuestionAnswer extends React.Component {
 	render(){
 		return(
 			<div>
-				<span>{this.state.question}</span>
-				<li>{this.state.answers.map((answer, id) => <Answer question={this.state.questionString} 
+				<div>{this.state.questionString}</div>
+				<div>{this.state.answers.map((answer, id) => <Answer question={this.state.questionString} 
 																														answer={answer} 
 																														key={id} 
-																														findCorrect={this.props.findCorrect} />)}</li>
-				<span>{this.state.timeElapsed}</span>
-				<span>Questions Left: {this.questionsLeft}</span>
+																														findCorrect={this.findCorrect} />)}</div>
+				<Timer time={this.props.timeElapsed} />
+				<div>Questions Left: {this.props.questionsLeft}</div>
 			</div>
 		)
 	}
 }
 
-export {QuestionAnswer}
+export default QuestionAnswer
 
 
 const Answer = (props) => (
-	<button onClick={() => props.findCorrect(props.answer, props.question)}></button>
+	<button onClick={() => props.findCorrect(props.answer, props.question)}>{props.answer}</button>
 )
 
-export {Answer}
+
+const Timer = (props) => (
+	<span>Time Elapsed: {props.time}</span>
+)
+
