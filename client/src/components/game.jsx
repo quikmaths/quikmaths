@@ -15,7 +15,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props) 
       this.state = {
-        questionString: '' + questionString[1] + questionString[0] + questionString[2],
+        questionString: '',
         answers: [],
         correctAnswer: undefined,
         questionsLeft: this.props.questionsLeft
