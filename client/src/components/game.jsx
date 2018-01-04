@@ -3,6 +3,7 @@ import QuestionAnswer from './QuestionAnswer.jsx'
 import Statistics from './Statistics.jsx'
 import questionGen from '../../../problemGen.js'
 
+
 const problemType = {
   '+': 'Addition',
   '-': 'Subtraction',
