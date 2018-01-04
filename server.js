@@ -10,8 +10,6 @@ app.use(bodyparser.json());
 // Serve up static files
 app.use(express.static(path.join(__dirname, '/client/www')));
 
-// Routes for login/signup
-
 // checks if username exists. if it doesn't it create the user in db
 app.post('/signup', (req, res) => {
   db.doesUserExist(req.body.username, (exists) => {
@@ -33,12 +31,30 @@ app.post('/user', (req, res) => {
 })
 
 // save new record to database
-app.post('newRecord', (req, res) => {
+app.post('/newRecord', (req, res) => {
   db.addNewRecord(req.body);
   res.send('Record Added to Database');
 })
 
-
+// return all records for a user
+app.post('/userRecords', (req, res) => {
+  const userId = req.body.userId;
+  const ascending = req.body.ascending;
+  const operator = req.body.operator
+  
+  db.getAllRecordsForUser(userId, (records) => {
+    if (operator) {
+      let filteredRecords = records.filter(record => record.operator === operator);
+      if (ascending) {
+        let sortedRecords = filteredRecords.sort((a, b) => {return a.score - b.score});
+        res.json(sortedRecords.slice(0, 100));
+      } else {
+        let sortedRecords = filteredRecords.sort((a, b) => {return b.score - a.score});
+        res.json(sortedRecords.slice(0, 100));
+      }
+    }
+  })
+})
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server listening on Port ${PORT}`));

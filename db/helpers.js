@@ -34,10 +34,6 @@ const addNewUser = function(userInfo) {
   })
 }
 
-
-
-
-
 const getUserByName = function(username, cb) {
   User.findAll({
     where: {
