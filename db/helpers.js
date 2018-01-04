@@ -9,7 +9,6 @@ const doesUserExist = function(username, cb) {
   })
   .then(results => {
     if (results.length === 0) {
-
       cb(false)
     } else {
       cb(true);
