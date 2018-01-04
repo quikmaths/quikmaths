@@ -9,15 +9,39 @@ const doesUserExist = function(username, cb) {
   })
   .then(results => {
     if (results.length === 0) {
+<<<<<<< HEAD
       cb(false)
     } else {
       cb(true);
+=======
+      cb()
+    } else {
+      console.log('user already exists');
+>>>>>>> added updateUser function to db/helpers.js
     }
   })
   .catch(err => {
     console.log('error:', err)
   })
 }
+<<<<<<< HEAD
+=======
+
+const addNewUser = function(userInfo) {
+  doesUserExist(userInfo.username, () => {
+    const newUser = User.create({
+      "username": userInfo.username,
+      "password": userInfo.password
+    })
+      .then(() => {
+        console.log('success');
+      })
+      .catch(err => {
+        console.log('error: ', err);
+      })
+  })
+}
+>>>>>>> added updateUser function to db/helpers.js
 
 const addNewUser = function(userInfo) {
   doesUserExist(userInfo.username, () => {
@@ -58,13 +82,40 @@ const getAllUsers = function(cb) {
         console.log('error: ', err)
       })
 }
+//userInfo not defined yet; might have to refactor based on what's passed in 
+const updateUser = function(userInfo, cb) {
+  //get previous user stats
+  getUserByName(userInfo.username, function(results){
+    let totalCorrect = results[0].dataValues.totalCorrect,
+    let totalIncorrect = results[0].dataValues.totalIncorrect,
+    let gamesPlayed = results[0].dataValues.gamesPlayed,
+    let highScore = results[0].dataValues.highScore,
+    let bestTime = results[0].dataValues.bestTime
 
-const updateUser = function(userInfo) {
+   //add new users stats to previous user stats
+    let newTotalCorrect = totalCorrect + userInfo.totalCorrect 
+    let newTotalIncorrect = totalIncorrect + userInfo.totalIncorrect 
+    let newGamesPlayed = gamesPlayed + 1
+    let newHighScore = Math.max(highScore, userInfo.highScore)
+    let newBestTime = Math.min(bestTime, userInfo.bestTime)
+
+    //update with new stats
+    User.update({
+      totalCorrect: newTotalCorrect, 
+      totalIncorrect: newTotalIncorrect, 
+      gamesPlayed: newGamesPlayed, 
+      highScore: newHighScore, 
+      bestTime: newBestTime
+    }).then(() => cb())
+  })
 
 }
 
+updateUser({username: 'caio'})
+
 
 const addNewRecord = function(recordInfo) {
+
   const newRecord = Record.build({
     "time": recordInfo.time,
     "numberCorrect": recordInfo.numberCorrect,
