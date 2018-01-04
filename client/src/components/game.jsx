@@ -13,22 +13,12 @@ const problemType = {
 
 class Game extends React.Component {
   constructor(props) {
-<<<<<<< HEAD
     super(props)
     this.state = {
       questionString: '',
       answers: [],
       correctAnswer: undefined
     }
-=======
-    super(props) 
-      this.state = {
-        questionString: '',
-        answers: [],
-        correctAnswer: undefined,
-        questionsLeft: this.props.questionsLeft
-      }
->>>>>>> QuestionAnswer component functional( bare min)
 
     this.newQuestion = this.newQuestion.bind(this);
   }
