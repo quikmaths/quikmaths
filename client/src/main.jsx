@@ -84,7 +84,6 @@ class App extends React.Component {
       if (this.state.inProgressBool) {
         this.startTimer()
       } else {
-        this.saveRecord()
         this.setState({
           timeElapsed: 0
         })
@@ -107,7 +106,9 @@ class App extends React.Component {
   resetCounts() {
     this.setState({
       numberIncorrect: 0,
-      numberCorrect: 0
+      numberCorrect: 0,
+      correctArray: [],
+      incorrectArray: []
     })
   }
 
