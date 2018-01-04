@@ -16,8 +16,7 @@ class Game extends React.Component {
       this.state = {
         questionString: '',
         answers: [],
-        correctAnswer: undefined,
-        questionsLeft: this.props.questionsLeft
+        correctAnswer: undefined
       }
 
     this.newQuestion = this.newQuestion.bind(this);
