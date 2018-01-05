@@ -69,17 +69,18 @@ const updateUser = function(userInfo, cb) {
     let gamesPlayed = results[0].dataValues.gamesPlayed
     let highScore = results[0].dataValues.highScore
     let bestTime = results[0].dataValues.bestTime
-
+    console.log('should be results: ', results)
    //add new users stats to previous user stats
    User.find({where: {username: userInfo.username}})
    .then(user => {
-    let newTotalCorrect = totalCorrect + userInfo.totalCorrect 
-    let newTotalIncorrect = totalIncorrect + userInfo.totalIncorrect 
-    let newGamesPlayed = gamesPlayed + 1
-    let newHighScore = Math.max(highScore, userInfo.highScore)
-    let newBestTime = Math.min(bestTime, userInfo.bestTime)
-   }, () => console.log('should be best time', newBestTime))
-
+    var newTotalCorrect = totalCorrect + userInfo.totalCorrect 
+    var newTotalIncorrect = totalIncorrect + userInfo.totalIncorrect 
+    var newGamesPlayed = gamesPlayed + 1
+    var newHighScore = Math.max(highScore, userInfo.highScore)
+    var newBestTime = Math.min(bestTime, userInfo.bestTime)
+   })
+   .then(() => {
+    console.log(newBestTime)
     User.find({where: {username: userInfo.username}})
         .then(user => {
           user.update({
@@ -89,9 +90,11 @@ const updateUser = function(userInfo, cb) {
             "highScore": newHighScore, 
             "bestTime": newBestTime
           })
-          .then(user => {cb(user)})
+          .then(user => {cb(user)
+          console.log(user)})
           .catch(error => {console.log('error: ', error)})
         })
+    })
   })
 }
 
@@ -173,5 +176,6 @@ module.exports = {
   getAllRecordsForOperator : getAllRecordsForOperator,
   sortRecordsByScore : sortRecordsByScore,
   sortRecordsByTime : sortRecordsByTime,
-  getAllRecords : getAllRecords
+  getAllRecords : getAllRecords,
+  updateUser : updateUser
 }
