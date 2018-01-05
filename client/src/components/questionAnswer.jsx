@@ -15,7 +15,6 @@ class QuestionAnswer extends React.Component {
 				this.props.incorrectArrayUpdate(question)
 				this.props.numberIncorrectUpdate()
 			}
-			console.log(questionsLeft)
 			if (questionsLeft === 0){
 				this.props.finalTimeUpdate(()=> {
 					this.props.saveNewScore()
