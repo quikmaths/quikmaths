@@ -38,7 +38,9 @@ class App extends React.Component {
       isLoggedIn: false,
       // render game or chooseyourpath conditionally
       choosePathMode: true,
-      isSignedUp: true
+      isSignedUp: true,
+      totalUserCorrect: null,
+      totalUserIncorrect: null
 
     }
     this.AppStyle = {
@@ -83,6 +85,7 @@ class App extends React.Component {
     this.showChoosePathMode = this.showChoosePathMode.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
     this.logout = this.logout.bind(this)
+    this.updateUserInfo = this.updateUserInfo.bind(this)
   }
 
   componentDidMount(){
@@ -204,7 +207,7 @@ class App extends React.Component {
     })
     .then((response)=> {
       this.setState({
-        userId: response.data[0].userId,
+        username: response.data[0].username,
         createdAt: response.data[0].createdAt,
         gamesPlayed: response.data[0].gamesPlayed,
         totalCorrect: response.data[0].totalCorrect,
@@ -216,6 +219,17 @@ class App extends React.Component {
     .catch((error)=> {
       console.log(error);
     });
+  }
+
+  updateUserInfo(object) {
+    this.setState({
+      highScore: object.data.highScore,
+      bestTime: object.data.bestTime,
+      totalUserIncorrect: object.data.totalIncorrect,
+      totalUserCorrect: object.data.totalCorrect,
+      gamesPlayed: object.data.gamesPlayed
+
+    }, () => console.log('totalUserCorrect', this.state.totalUserCorrect) )
   }
   
   getLeaderBoard() {
@@ -308,6 +322,8 @@ class App extends React.Component {
               highScore={this.state.highScore}
               bestTime={this.state.bestTime}
               recordsList={this.state.recordsList}
+              totalUserCorrect={this.state.totalUserCorrect}
+              totalUserIncorrect={this.state.totalUserIncorrect}
             />
             <NavSideBar
               style={this.NavSideBarStyle}
@@ -340,6 +356,9 @@ class App extends React.Component {
               choosePathMode = {this.state.choosePathMode}
               showChoosePathMode = {this.showChoosePathMode}
               startNewGame= {this.startNewGame}
+              updateUserInfo = {this.updateUserInfo}
+            
+              
             />
           </div>
        )

@@ -59,6 +59,8 @@ class NavTopBar extends React.Component {
           totalIncorrect={this.props.totalIncorrect}
           highScore={this.props.highScore}
           bestTime={this.props.bestTime}
+          totalUserCorrect={this.props.totalUserCorrect}
+          totalUserIncorrect={this.props.totalUserIncorrect}
         />
         <LeaderBoard
           selectedTab={this.state.selectedTab}

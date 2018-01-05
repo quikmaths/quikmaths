@@ -64,40 +64,24 @@ const getAllUsers = function(cb) {
 
 const updateUser = function(userInfo, cb) {
   getUserByName(userInfo.username, function(results) {
-    let totalCorrect = results[0].dataValues.totalCorrect
-    let totalIncorrect = results[0].dataValues.totalIncorrect
-    let gamesPlayed = results[0].dataValues.gamesPlayed
-    let highScore = results[0].dataValues.highScore
-    let bestTime = results[0].dataValues.bestTime
-    console.log('should be results: ', results)
-   //add new users stats to previous user stats
-   User.find({where: {username: userInfo.username}})
-   .then(user => {
-    var newTotalCorrect = totalCorrect + userInfo.totalCorrect 
-    var newTotalIncorrect = totalIncorrect + userInfo.totalIncorrect 
-    var newGamesPlayed = gamesPlayed + 1
-    var newHighScore = Math.max(highScore, userInfo.highScore)
-    var newBestTime = Math.min(bestTime, userInfo.bestTime)
-   })
-   .then(() => {
-    console.log(newBestTime)
-    User.find({where: {username: userInfo.username}})
-        .then(user => {
-          user.update({
-            "totalCorrect": newTotalCorrect, 
-            "totalIncorrect": newTotalIncorrect, 
-            "gamesPlayed": newGamesPlayed, 
-            "highScore": newHighScore, 
-            "bestTime": newBestTime
-          })
-          .then(user => {cb(user)
-          console.log(user)})
-          .catch(error => {console.log('error: ', error)})
-        })
+    var totalCorrect = results[0].dataValues.totalCorrect + userInfo.numberCorrect
+    var totalIncorrect = results[0].dataValues.totalIncorrect + userInfo.numberIncorrect
+    var gamesPlayed = results[0].dataValues.gamesPlayed + 1
+    var newHighScore = Math.max(userInfo.highScore, results[0].dataValues.highScore)
+    var newTime = Math.min(userInfo.bestTime, results[0].dataValues.bestTime)
+        User.find({
+      username: userInfo.username,
+    }).then((user) => {
+      user.update({
+        totalCorrect: totalCorrect,
+        totalIncorrect: totalIncorrect,
+        gamesPlayed: gamesPlayed,
+        highScore: newHighScore,
+        bestTime: newTime
+      }).then(user => cb(user))
     })
   })
 }
-
 
 
 
