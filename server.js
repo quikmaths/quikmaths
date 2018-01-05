@@ -121,6 +121,7 @@ app.post('/user', (req, res) => {
 */
 app.post('/newRecord', (req, res) => {
   db.addNewRecord(req.body);
+  db.updateUser(req.body);
   res.send('Record Added to Database');
 })
 
@@ -150,6 +151,7 @@ app.post('/userRecords', (req, res) => {
       res.json(records.slice(0, 100));
     }
   })
+
 })
 
 // return all records

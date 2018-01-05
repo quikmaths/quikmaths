@@ -2,8 +2,8 @@ const Sequelize = require('../config.js').Sequelize;
 const sequelize = require('../config.js').sequelize;
 
 const User = sequelize.define('user', {
-  username: Sequelize.DataTypes.STRING,
-  password: Sequelize.DataTypes.STRING, 
+  username: Sequelize.STRING,
+  password: Sequelize.STRING, 
   totalCorrect: {
     type: Sequelize.INTEGER,
     defaultValue: 0
