@@ -82,6 +82,24 @@ class App extends React.Component {
     this.incorrectArrayUpdate = this.incorrectArrayUpdate.bind(this)
     this.showChoosePathMode = this.showChoosePathMode.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
+    this.logout = this.logout.bind(this)
+  }
+
+  componentDidMount(){
+    this.getIndex()
+  }
+
+  getIndex(){
+    axios.get('/git')
+         .then((result) => {
+          console.log(result)
+           if (result.data !== false){
+            this.setState({
+              isLoggedIn: true, 
+              username: result.data.user
+            })
+           }
+         })
   }
 
   startTimer() {
@@ -163,7 +181,7 @@ class App extends React.Component {
   showChoosePathMode() {
     this.setState({
       choosePathMode: true
-    },()=>{console.log(this.state.choosePathMode)})
+    },() =>{console.log(this.state.choosePathMode)})
   }
 
   startNewGame(operator) {
@@ -171,7 +189,7 @@ class App extends React.Component {
       questionsLeft: 10, 
       problemType: operator,
       choosePathMode: false
-    }, ()=> {
+    }, () => {
       this.resetCounts()
       this.inProgressBoolUpdate()
     })
@@ -212,7 +230,7 @@ class App extends React.Component {
             if(result.data === false) {
                alert('username already exists');
             } else {
-              console.log('signup this', this)
+              console.log('signup result', result.data)
                this.setState({"isLoggedIn" : true, 
                               "username" : result.data.username, 
                               "userId" : result.data.id}) 
@@ -223,9 +241,11 @@ class App extends React.Component {
   handleLogin(obj) {
     axios.post('/login', obj)
          .then((result) => {
+          console.log(result)
             if (result.data === false) {
               alert('Please try again or Create New Account');
             } else {
+              console.log('login result', result.data)
               this.setState({"isSignedUp": true, 
                             "isLoggedIn": true, 
                             "username": result.data.username, 
@@ -247,6 +267,18 @@ class App extends React.Component {
     })
   }
 
+  logout(){
+    axios.get('/logout')
+         .then(() => {
+          this.setState({
+            isLoggedIn: false, 
+            isSignedUp: true
+          }, () => {
+            this.getIndex()
+          })
+         })
+  }
+
 
   render() {
     if (this.state.isLoggedIn === false && this.state.isSignedUp === true) {
@@ -260,6 +292,7 @@ class App extends React.Component {
     } else {
        return (
           <div style={this.AppStyle}>
+          <button onClick={this.logout}>Logout</button>
             <NavTopBar
               getUserInfo={this.getUserInfo}
               getLeaderBoard={this.getLeaderBoard}
