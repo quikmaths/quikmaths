@@ -54,6 +54,7 @@ class Game extends React.Component {
         totalScore = totalScore - time
       }
     }
+    
     var totalScore = Math.floor((preTotal + correctAnswers + 30) * 100)
     if (totalScore >= 300000) {
       totalScore = 300000
