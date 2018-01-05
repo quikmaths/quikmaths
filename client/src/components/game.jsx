@@ -73,7 +73,7 @@ class Game extends React.Component {
         'numberCorrect': this.props.numberCorrect,
         'numberIncorrect': this.props.numberIncorrect,
         'score': newScore,
-        'userId': this.props.userId,
+        'username': this.props.username,
         'operator': this.props.problemType
       })
      
