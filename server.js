@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const bodyparser = require('body-parser');
 const db = require('./db/helpers.js');
+const bcrypt = require('bcrypt');
 
 app.use(bodyparser.json());
 
@@ -14,10 +15,36 @@ app.use(express.static(path.join(__dirname, '/client/www')));
 app.post('/signup', (req, res) => {
   db.doesUserExist(req.body.username, (exists) => {
     if (exists) {
-      res.json('Username Already Exists');
+      res.json(false);
     } else {
-      db.addNewUser(req.body)
-      res.json('User Account Created');
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+          req.body.password = hash;
+          db.addNewUser(req.body, (err, userObj) => {
+            if (err){
+              res.json(false)
+            } else {
+              res.json(userObj)
+            }
+          });
+        });
+      });
+    }
+  })
+});
+
+app.post('/login', (req, res) => {
+  db.getUserByName(req.body.username, (exists) => {
+    if (!exists) {
+      res.json(false);
+    } else {
+      bcrypt.compare(req.body.password, exists[0].dataValues.password, (err, result) => {
+        if (result) {
+          res.json(exists[0].dataValues)
+        } else {
+          res.json(false);
+        }
+      })
     }
   })
 })
