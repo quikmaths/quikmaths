@@ -26,7 +26,6 @@ const isLoggedIn = function(req) {
 };
 
 const checkUser = function(req, res, next){
-  console.log('hey')
   if (!isLoggedIn(req)) {
     res.json(false)
   } else {
@@ -49,7 +48,6 @@ app.get('/git', checkUser, (req, res) => {
 
 
 app.get('/logout', function(req, res) {
-  console.log('destroy')
   req.session.destroy(function(err) {
     res.end();
   });
