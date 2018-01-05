@@ -6,38 +6,36 @@ class UserInfo extends React.Component {
     super(props);
   }
   render() {
-    // correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
-    return (
-      <div>
-        <h4>UserInfo</h4>
-        <ul>
-          <li>
-            username: {this.props.username || 'brad'}
-          </li>
-          <li>
-            createdAt: {this.props.createdAt || 'yesterday'}
-          </li>
-          <li>
-            gamesPlayed: {this.props.gamesPlayed || 'like a bunch'}
-          </li>
-          <li>
-            totalCorrect: {this.props.totalCorrect || '1500'}
-          </li>
-          <li>
-            totalIncorrect: {this.props.totalIncorrect || '500'}
-          </li>
-          <li>
-            percentage: 75%
-          </li>
-          <li>
-            highScore: {this.props.highScore || '88848'}
-          </li>
-          <li>
-            bestTime: {this.props.bestTime || '24'}
-          </li>
-        </ul>
-      </div>
-    )
+    if (this.props.selectedTab === 'user') {
+      
+      return (
+        <div>
+          <h4>User Info</h4>
+          <ul>
+            <li>
+              username: {this.props.username}
+            </li>
+            <li>
+              Games Played: {this.props.gamesPlayed}
+            </li>
+            <li>
+              Total Correct: {this.props.totalUserCorrect}
+            </li>
+            <li>
+              Total Incorrect: {this.props.totalUserIncorrect}
+            </li>
+            <li>
+              High Score: {this.props.highScore}
+            </li>
+            <li>
+              Best Time: {this.props.bestTime}
+            </li>
+          </ul>
+        </div>
+      )
+    } else {
+      return null
+    }
   }
   
 }
