@@ -4,13 +4,9 @@ const app = express();
 const path = require('path');
 const bodyparser = require('body-parser');
 const db = require('./db/helpers.js');
-// const cookie = require('cookie-parser');
-// const passport = require('passport');
-// const session = require('express-session');
-
+const bcrypt = require('bcrypt');
 
 app.use(bodyparser.json());
-// app.use(cookieParser());
 
 // Serve up static files
 app.use(express.static(path.join(__dirname, '/client/www')));
@@ -21,33 +17,37 @@ app.post('/signup', (req, res) => {
     if (exists) {
       res.json(false);
     } else {
-      db.addNewUser(req.body, (err, userObj) => {
-        if (err){
-          res.json(false)
-        } else {
-          res.json(userObj)
-        }
-      })
-
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+          req.body.password = hash;
+          db.addNewUser(req.body, (err, userObj) => {
+            if (err){
+              res.json(false)
+            } else {
+              res.json(userObj)
+            }
+          });
+        });
+      });
     }
   })
-})
-
+});
 
 app.post('/login', (req, res) => {
   db.getUserByName(req.body.username, (exists) => {
     if (!exists) {
       res.json(false);
     } else {
-      if (req.body.password === exists[0].dataValues.password){
-        res.json(exists[0].dataValues)
-      } else {
-        res.json(false)
-      }
+      bcrypt.compare(req.body.password, exists[0].dataValues.password, (err, result) => {
+        if (result) {
+          res.json(exists[0].dataValues)
+        } else {
+          res.json(false);
+        }
+      })
     }
   })
 })
-
 
 // returns all information about user that exists in database
 /*
