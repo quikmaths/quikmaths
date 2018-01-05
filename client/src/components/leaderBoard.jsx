@@ -15,7 +15,7 @@ class LeaderBoard extends React.Component {
     }
   }
   render() {
-    if (this.props.selectedTab === 'leaderboard') {
+    if (this.props.selectedTab === 'leaderboard' && this.props.toggleTab) {
       return (
         <div>
           <Table data={this.props.recordsList} rowStyle={this.rowStyle} tableStyle={this.tableStyle} />

@@ -55,10 +55,13 @@ class App extends React.Component {
       gridTemplateColumns: '2fr 5fr',
       gridColumnGap: '2.5%'
     }
-    this.NavTopBarStyle = {
-
+    this.collapseStyle = {
+      fontFamily: 'Poppins',
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      gridColumnGap: '2.5%'
     }
-    this.GameStyle = {
+    this.NavTopBarStyle = {
 
     }
 
@@ -249,27 +252,27 @@ class App extends React.Component {
 
   handleSignUp(obj){
     axios.post('/signup', obj)
-         .then((result) => {
-            if(result.data === false) {
-               alert('username already exists');
-            } else {
-               this.setState({"isLoggedIn" : true, 
-                              "username" : result.data}) 
-            }
-          })
+      .then((result) => {
+        if(result.data === false) {
+          alert('username already exists');
+        } else {
+          this.setState({"isLoggedIn" : true, 
+          "username" : result.data}) 
+        }
+      })
   }
 
   handleLogin(obj) {
     axios.post('/login', obj)
-         .then((result) => {
-            if (result.data === false) {
-              alert('Please try again or Create New Account');
-            } else {
-              this.setState({"isSignedUp": true, 
-                            "isLoggedIn": true, 
-                            "username": result.data})
-            }
-         })
+      .then((result) => {
+        if (result.data === false) {
+          alert('Please try again or Create New Account');
+        } else {
+          this.setState({"isSignedUp": true, 
+          "isLoggedIn": true, 
+          "username": result.data})
+        }
+      })
   }
 
   goToSignUp(){
@@ -286,14 +289,14 @@ class App extends React.Component {
 
   logout(){
     axios.get('/logout')
-         .then(() => {
-          this.setState({
-            isLoggedIn: false, 
-            isSignedUp: true
-          }, () => {
-            this.getIndex()
-          })
-         })
+      .then(() => {
+      this.setState({
+        isLoggedIn: false, 
+        isSignedUp: true
+      }, () => {
+        this.getIndex()
+      })
+      })
   }
 
 
@@ -308,7 +311,7 @@ class App extends React.Component {
       )
     } else {
        return (
-          <div style={this.AppStyle}>
+          <div style={this.collapseStyle}>
             <NavTopBar
               getUserInfo={this.getUserInfo}
               getLeaderBoard={this.getLeaderBoard}

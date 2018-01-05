@@ -7,7 +7,8 @@ class NavTopBar extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      selectedTab: 'user'
+      selectedTab: 'user',
+      toggleTab: 'true'
     }
     this.listStyle = {
       display: 'grid',
@@ -23,8 +24,16 @@ class NavTopBar extends React.Component {
       cursor : 'pointer'
     }
     this.titleStyle = {
-      marginTop: '-10px'
+      display: 'grid',
+      gridTemplateColumns: '4fr 1fr',
+      marginTop: '-30px'
     }
+  }
+
+  toggleTab() {
+    this.setState({
+      toggleTab: !this.state.toggleTab
+    })
   }
 
   selectedTabUpdate(selection) {
@@ -36,15 +45,22 @@ class NavTopBar extends React.Component {
   render(){
     return (
       <div>
-        <h1 style={this.titleStyle}>
-          QUIKMATHS
-        </h1>
+        <div style={this.titleStyle}>
+          <h1>QUIKMATHS</h1>
+          <h1
+          style={{textAlign: 'right', cursor: 'pointer'}}
+          onClick={()=> {this.toggleTab()}}
+          >&#9776;</h1>
+        </div>
         <ul style={this.listStyle}>
           <li 
           style={this.listItemStyle}
           onClick={() => {
             this.props.getUserInfo()
             this.selectedTabUpdate('user')
+            if (!this.state.toggleTab) {
+              this.toggleTab()
+            }
           }}>
             User
           </li>
@@ -53,6 +69,9 @@ class NavTopBar extends React.Component {
           onClick={() => {
             this.props.getLeaderBoard()
             this.selectedTabUpdate('leaderboard')
+            if (!this.state.toggleTab) {
+              this.toggleTab()
+            }
           }}>
             LeaderBoard
           </li>
@@ -60,12 +79,16 @@ class NavTopBar extends React.Component {
           style={this.listItemStyle}
           onClick={() => {
             this.selectedTabUpdate('tutorial')
+            if (!this.state.toggleTab) {
+              this.toggleTab()
+            }
           }}>
             Tutorial
           </li>
         </ul>
         <UserInfo
           selectedTab={this.state.selectedTab}
+          toggleTab={this.state.toggleTab}
           username={this.props.username}
           createdAt={this.props.createdAt}
           gamesPlayed={this.props.gamesPlayed}
@@ -75,15 +98,17 @@ class NavTopBar extends React.Component {
           bestTime={this.props.bestTime}
           totalUserCorrect={this.props.totalUserCorrect}
           totalUserIncorrect={this.props.totalUserIncorrect}
+          logout = {this.props.logout}
         />
         <LeaderBoard
           selectedTab={this.state.selectedTab}
+          toggleTab={this.state.toggleTab}
           recordsList={this.props.recordsList}
         />
         <InfoSideBar
           selectedTab={this.state.selectedTab}
+          toggleTab={this.state.toggleTab}
         />
-        <button onClick={this.logout}>Logout</button>
       </div>
     )
   }

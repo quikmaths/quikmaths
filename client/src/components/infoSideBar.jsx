@@ -15,7 +15,7 @@ class InfoSideBar extends Component {
     }
   }
 render() {
-  if (this.props.selectedTab === 'tutorial') {
+  if (this.props.selectedTab === 'tutorial' && this.props.toggleTab) {
     return(
         <div style={this.style}>
           Tutorial goes here!
