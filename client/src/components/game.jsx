@@ -76,6 +76,15 @@ class Game extends React.Component {
         'username': this.props.username,
         'operator': this.props.problemType
       })
+     
+    axios.post('/updateUser', {
+      'username': this.props.username,
+      'highScore': newScore,
+      'bestTime': this.state.finalTime,
+      'numberCorrect': this.props.numberCorrect,
+      'numberIncorrect': this.props.numberIncorrect,
+      'gamesPlayed': this.props.gamesPlayed
+    }).then((user) => this.props.updateUserInfo(user))
   }
 
 

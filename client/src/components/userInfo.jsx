@@ -10,25 +10,25 @@ class UserInfo extends React.Component {
       
       return (
         <div>
-          <h4>UserInfo</h4>
+          <h4>User Info</h4>
           <ul>
             <li>
               username: {this.props.username}
             </li>
             <li>
-              gamesPlayed: {this.props.gamesPlayed}
+              Games Played: {this.props.gamesPlayed}
             </li>
             <li>
-              totalCorrect: {this.props.totalCorrect}
+              Total Correct: {this.props.totalUserCorrect}
             </li>
             <li>
-              totalIncorrect: {this.props.totalIncorrect}
+              Total Incorrect: {this.props.totalUserIncorrect}
             </li>
             <li>
-              highScore: {this.props.highScore}
+              High Score: {this.props.highScore}
             </li>
             <li>
-              bestTime: {this.props.bestTime}
+              Best Time: {this.props.bestTime}
             </li>
           </ul>
         </div>
