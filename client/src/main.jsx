@@ -46,8 +46,8 @@ class App extends React.Component {
       choosePathMode: true,
       isSignedUp: true,
       totalUserCorrect: null,
-      totalUserIncorrect: null
-
+      totalUserIncorrect: null,
+      mounted: false
     }
     this.AppStyle = {
       fontFamily: 'Poppins',
@@ -107,7 +107,14 @@ class App extends React.Component {
            if (result.data !== false){
             this.setState({
               isLoggedIn: true, 
-              username: result.data.user
+              username: result.data.user,
+              mounted: true
+            }, () => {
+              this.getUserInfo();
+            })
+           } else {
+            this.setState({
+              mounted: true
             })
            }
          })
@@ -209,6 +216,7 @@ class App extends React.Component {
       username: this.state.username
     })
     .then((response)=> {
+      console.log(response);
       this.setState({
         username: response.data[0].username,
         createdAt: response.data[0].createdAt,
@@ -288,6 +296,7 @@ class App extends React.Component {
   }
 
   logout(){
+    console.log('loggin out')
     axios.get('/logout')
       .then(() => {
       this.setState({
@@ -301,6 +310,8 @@ class App extends React.Component {
 
 
   render() {
+    if (this.state.mounted) {
+
     if (this.state.isLoggedIn === false && this.state.isSignedUp === true) {
       return (
         <Login handleLogin={this.handleLogin} goToSignUp={this.goToSignUp}/>
@@ -366,7 +377,10 @@ class App extends React.Component {
           </div>
        )
     }
+  } else {
+    return (<span></span>)
   }
+}
 }
 
 ReactDOM.render(<App />, document.getElementById('mount'));
