@@ -9,6 +9,8 @@ import LeaderBoard from './components/leaderBoard.jsx';
 import UserInfo from './components/userInfo.jsx';
 import Login from './components/login.jsx';
 import SignUp from './components/signUp.jsx';
+import questionGen from '../../problemGen.js';
+import _ from 'underscore';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +25,10 @@ class App extends React.Component {
       inProgressBool: false,
       correctArray: [],
       incorrectArray: [],
+      //state for newQuestion
+      questionString: [],
+      answers: [],
+      correctAnswer: undefined,
       // states for userinfo
       username: null,
       userId: null,
@@ -70,7 +76,6 @@ class App extends React.Component {
     this.goToLogin = this.goToLogin.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
     this.inProgressBoolUpdate = this.inProgressBoolUpdate.bind(this)
-    this.problemTypeUpdate = this.problemTypeUpdate.bind(this)
     this.questionsLeftUpdate = this.questionsLeftUpdate.bind(this)
     this.getUserInfo = this.getUserInfo.bind(this)
     this.getLeaderBoard = this.getLeaderBoard.bind(this)
@@ -84,10 +89,20 @@ class App extends React.Component {
     this.showChoosePathMode = this.showChoosePathMode.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
     this.logout = this.logout.bind(this)
+    this.newQuestion = this.newQuestion.bind(this);
   }
 
   componentDidMount(){
     this.getIndex()
+  }
+
+  newQuestion() {
+    let infoObject = questionGen(this.state.problemType, 3, 1);
+    this.setState({
+      questionString: `${infoObject.question[1]} ${infoObject.question[0]} ${infoObject.question[2]}`,
+      answers: _.shuffle(infoObject.choices),
+      correctAnswer: infoObject.correctAnswer
+    })
   }
 
   getIndex(){
@@ -113,13 +128,6 @@ class App extends React.Component {
         this.startTimer()
       }
     }, 1)
-  }
-
-  problemTypeUpdate(operator) {
-    // navsidebar passes in operator onclick
-    this.setState({
-      problemType: operator
-    })
   }
 
   inProgressBoolUpdate() {
@@ -195,6 +203,7 @@ class App extends React.Component {
       choosePathMode: false,
       startTime: Date.now()
     }, () => {
+      this.newQuestion(operator);
       this.resetCounts()
       this.inProgressBoolUpdate()
     })
@@ -316,7 +325,6 @@ class App extends React.Component {
               inProgressBool = {this.state.inProgressBool}
               startNewGame= {this.startNewGame}
               inProgressBoolUpdate = {this.inProgressBoolUpdate}
-              problemTypeUpdate = {this.problemTypeUpdate}
               questionsLeftUpdate = {this.questionsLeftUpdate}
               choosePathMode = {this.state.choosePathMode}
             />
@@ -342,6 +350,10 @@ class App extends React.Component {
               choosePathMode = {this.state.choosePathMode}
               showChoosePathMode = {this.showChoosePathMode}
               startNewGame= {this.startNewGame}
+              newQuestion = {this.newQuestion}
+              questionString = {this.state.questionString}
+              answers = {this.state.answers}
+              correctAnswer = {this.state.correctAnswer}
             />
           </div>
        )
