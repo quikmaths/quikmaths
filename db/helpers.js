@@ -85,6 +85,7 @@ const updateUser = function(userInfo, cb) {
 
 
 
+
 const addNewRecord = function(recordInfo) {
 
   const newRecord = Record.build({
