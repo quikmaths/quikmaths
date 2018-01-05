@@ -139,9 +139,12 @@ class App extends React.Component {
     })
   }
 
-  questionsLeftUpdate() {
+  questionsLeftUpdate(cb) {
     this.setState({
       questionsLeft: this.state.questionsLeft - 1
+    }, ()=> {
+      // run callback (i.e. save data) after question count updated
+      cb(this.state.questionsLeft)
     })
   }
 
@@ -163,7 +166,7 @@ class App extends React.Component {
   showChoosePathMode() {
     this.setState({
       choosePathMode: true
-    },()=>{console.log(this.state.choosePathMode)})
+    })
   }
 
   startNewGame(operator) {
@@ -178,14 +181,13 @@ class App extends React.Component {
   }
 
   getUserInfo() {
-    console.log('getting user info')
     axios.post('/userRecords', {
-      username: 'username',
-      operator: null,
+      username: this.props.username,
+      operator: this.props.problemType,
       ascending: false
     })
     .then(function (response) {
-      console.log(response);
+      console.log(response.data)
     })
     .catch(function (error) {
       console.log(error);
@@ -193,46 +195,46 @@ class App extends React.Component {
   }
   
   getLeaderBoard() {
-    console.log('getting records')
     axios.post('/allRecords', {
-        operator: undefined,
+        operator: this.props.problemType,
         ascending: false
     })
-    .then(function (response) {
-      console.log(response);
+    .then((response)=> {
+      this.setState({
+        recordsList: response.data
+      })
     })
-    .catch(function (error) {
+    .catch((error)=> {
       console.log(error);
     });
   }
 
   handleSignUp(obj){
     axios.post('/signup', obj)
-         .then((result) => {
-            if(result.data === false) {
-               alert('username already exists');
-            } else {
-              console.log('signup this', this)
-               this.setState({"isLoggedIn" : true, 
-                              "username" : result.data.username, 
-                              "userId" : result.data.id}) 
-            }
-          })
+      .then((result) => {
+        if(result.data === false) {
+          alert('username already exists');
+        } else {
+            this.setState({"isLoggedIn" : true, 
+              "username" : result.data.username, 
+              "userId" : result.data.id}) 
+        }
+      })
   }
 
   handleLogin(obj) {
     axios.post('/login', obj)
-         .then((result) => {
-            if (result.data === false) {
-              alert('Please try again or Create New Account');
-            } else {
-              this.setState({"isSignedUp": true, 
-                            "isLoggedIn": true, 
-                            "username": result.data.username, 
-                            "userId": result.data.id
-                          })
-            }
-         })
+      .then((result) => {
+        if (result.data === false) {
+          alert('Please try again or Create New Account');
+        } else {
+          this.setState({"isSignedUp": true, 
+            "isLoggedIn": true, 
+            "username": result.data.username, 
+            "userId": result.data.id
+          })
+        }
+      })
   }
 
   goToSignUp(){
@@ -293,6 +295,7 @@ class App extends React.Component {
               correctArray = {this.state.correctArray}
               incorrectArray = {this.state.incorrectArray}
               userId = {this.state.userId}
+              username = {this.state.username}
               numberCorrectUpdate = {this.numberCorrectUpdate}
               numberIncorrectUpdate = {this.numberIncorrectUpdate}
               resetCounts = {this.resetCounts}

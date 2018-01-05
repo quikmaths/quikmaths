@@ -7,7 +7,7 @@ const Record = sequelize.define('record', {
   numberCorrect: Sequelize.INTEGER,
   numberIncorrect: Sequelize.INTEGER,
   score: Sequelize.INTEGER,
-  userId: Sequelize.INTEGER,
+  username: Sequelize.DataTypes.STRING,
   operator: Sequelize.DataTypes.STRING
 });
 
