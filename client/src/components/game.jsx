@@ -17,29 +17,10 @@ class Game extends React.Component {
     super(props) 
     // finaltime is state in game component instead of prop
     this.state = {
-      startTime: 0,
-      endTime: 0,
-      finalTime: 0,
-      questionString: [],
-      answers: [],
-      correctAnswer: undefined,
+      finalTime: 0
     }
-    this.newQuestion = this.newQuestion.bind(this);
     this.finalTimeUpdate = this.finalTimeUpdate.bind(this);
     this.saveNewScore = this.saveNewScore.bind(this);
-  }
-
-  componentWillMount(){
-    this.newQuestion()
-  }
-
-  newQuestion() {
-    let infoObject = questionGen(this.props.problemType, 3, 1);
-    this.setState({
-      questionString: `${infoObject.question[1]} ${infoObject.question[0]} ${infoObject.question[2]}`,
-      answers: _.shuffle(infoObject.choices),
-      correctAnswer: infoObject.correctAnswer
-    })
   }
 
   finalTimeUpdate(cb) {
@@ -95,6 +76,15 @@ class Game extends React.Component {
         'username': this.props.username,
         'operator': this.props.problemType
       })
+     
+    axios.post('/updateUser', {
+      'username': this.props.username,
+      'highScore': newScore,
+      'bestTime': this.state.finalTime,
+      'numberCorrect': this.props.numberCorrect,
+      'numberIncorrect': this.props.numberIncorrect,
+      'gamesPlayed': this.props.gamesPlayed
+    }).then((user) => this.props.updateUserInfo(user))
   }
 
 
@@ -124,10 +114,10 @@ class Game extends React.Component {
           <div>
             <h1>{problemType[this.props.problemType]}</h1>
             <QuestionAnswer 
-              questionString={this.state.questionString}
-              answers={this.state.answers}
-              correctAnswer={this.state.correctAnswer}
-              newQuestion={this.newQuestion}
+              questionString={this.props.questionString}
+              answers={this.props.answers}
+              correctAnswer={this.props.correctAnswer}
+              newQuestion={this.props.newQuestion}
               numberCorrectUpdate={this.props.numberCorrectUpdate}
               questionsLeftUpdate={this.props.questionsLeftUpdate}
               incorrectArrayUpdate={this.props.incorrectArrayUpdate}

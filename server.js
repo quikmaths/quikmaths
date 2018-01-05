@@ -119,7 +119,30 @@ app.post('/user', (req, res) => {
 */
 app.post('/newRecord', (req, res) => {
   db.addNewRecord(req.body);
+  db.updateUser(req.body);
   res.send('Record Added to Database');
+})
+
+// update user info in database
+/*
+{
+  "id": id,
+  "username": username,
+  "password": password,
+  "totalCorrect": totalCorrect,
+  "totalIncorrect", totalIncorrect,
+  "gamesPlayed": gamesPlayed,
+  "highScore": highScore,
+  "bestTime": bestTime,
+  "createdAt": createdAt,
+  "updatedAt": updatedAt
+}
+*/
+
+app.post('/updateUser', (req, res) => {
+  db.updateUser(req.body, (user) => {
+    res.json(user)
+  });
 })
 
 // return all records for a user
@@ -148,6 +171,7 @@ app.post('/userRecords', (req, res) => {
       res.json(records.slice(0, 100));
     }
   })
+
 })
 
 // return all records
