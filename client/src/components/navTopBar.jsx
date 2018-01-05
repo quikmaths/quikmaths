@@ -9,11 +9,6 @@ class NavTopBar extends React.Component {
     this.state = {
       selectedTab: 'user'
     }
-    this.style = {
-      'display' : 'flex',
-      'flexDirection': 'column',
-      'fontFamily' : 'Poppins'
-    }
     this.selectStyle = {
       'cursor' : 'pointer'
     }
