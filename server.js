@@ -133,11 +133,11 @@ app.post('/newRecord', (req, res) => {
 }
 */
 app.post('/userRecords', (req, res) => {
-  const userId = req.body.userId;
+  const username = req.body.username;
   const ascending = req.body.ascending;
   const operator = req.body.operator
   
-  db.getAllRecordsForUser(userId, (records) => {
+  db.getAllRecordsForUser(username, (records) => {
     if (operator) {
       records = records.filter(record => record.operator === operator);
     }
@@ -171,7 +171,7 @@ app.post('/allRecords', (req, res) => {
       records = records.sort((a, b) => {return a.score - b.score});
       res.json(records.slice(0, 100));
     } else {
-      let records = records.sort((a, b) => {return b.score - a.score});
+      records = records.sort((a, b) => {return b.score - a.score});
       res.json(records.slice(0, 100));
     }
   });

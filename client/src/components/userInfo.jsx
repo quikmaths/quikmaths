@@ -6,7 +6,6 @@ class UserInfo extends React.Component {
     super(props);
   }
   render() {
-    // correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
     if (this.props.selectedTab === 'user') {
       
       return (
@@ -14,28 +13,22 @@ class UserInfo extends React.Component {
           <h4>UserInfo</h4>
           <ul>
             <li>
-              username: {this.props.username || 'brad'}
+              username: {this.props.username}
             </li>
             <li>
-              createdAt: {this.props.createdAt || 'yesterday'}
+              gamesPlayed: {this.props.gamesPlayed}
             </li>
             <li>
-              gamesPlayed: {this.props.gamesPlayed || 'like a bunch'}
+              totalCorrect: {this.props.totalCorrect}
             </li>
             <li>
-              totalCorrect: {this.props.totalCorrect || '1500'}
+              totalIncorrect: {this.props.totalIncorrect}
             </li>
             <li>
-              totalIncorrect: {this.props.totalIncorrect || '500'}
+              highScore: {this.props.highScore}
             </li>
             <li>
-              percentage: 75%
-            </li>
-            <li>
-              highScore: {this.props.highScore || '88848'}
-            </li>
-            <li>
-              bestTime: {this.props.bestTime || '24'}
+              bestTime: {this.props.bestTime}
             </li>
           </ul>
         </div>

@@ -98,8 +98,8 @@ const addNewRecord = function(recordInfo) {
     "numberCorrect": recordInfo.numberCorrect,
     "numberIncorrect": recordInfo.numberIncorrect,
     "score": recordInfo.score,
-    "userId": recordInfo.userId,
-    "operate": recordInfo.operator
+    "username": recordInfo.username,
+    "operator": recordInfo.operator
   })
     .save()
     .then()

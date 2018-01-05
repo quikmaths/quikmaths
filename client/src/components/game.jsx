@@ -17,6 +17,8 @@ class Game extends React.Component {
     super(props) 
     // finaltime is state in game component instead of prop
     this.state = {
+      startTime: 0,
+      endTime: 0,
       finalTime: 0,
       questionString: [],
       answers: [],
@@ -40,9 +42,11 @@ class Game extends React.Component {
     })
   }
 
-  finalTimeUpdate() {
+  finalTimeUpdate(cb) {
     this.setState({
-      finalTime: this.props.timeElapsed
+      finalTime: this.props.timeElapsed / 100
+    }, ()=> {
+      cb();
     })
   }
 
@@ -83,16 +87,14 @@ class Game extends React.Component {
       this.props.numberCorrect,
       this.props.numberIncorrect
     )
-    axios.post('/newRecord', (req, res) => {
-      res.send({
+    axios.post('/newRecord', {
         'time': this.state.finalTime,
         'numberCorrect': this.props.numberCorrect,
         'numberIncorrect': this.props.numberIncorrect,
         'score': newScore,
-        'userId': userId,
-        'operator': this.state.problemType
+        'username': this.props.username,
+        'operator': this.props.problemType
       })
-    })
   }
 
 

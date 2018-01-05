@@ -56,22 +56,12 @@ class NavTopBar extends React.Component {
           createdAt={this.props.createdAt}
           gamesPlayed={this.props.gamesPlayed}
           totalCorrect={this.props.totalCorrect}
-          totalIncorrect={this.props.totaIncorrect}
+          totalIncorrect={this.props.totalIncorrect}
           highScore={this.props.highScore}
           bestTime={this.props.bestTime}
-          username={this.props.username}
-          recordsList={this.props.recordsList}
         />
         <LeaderBoard
           selectedTab={this.state.selectedTab}
-          username={this.props.username}
-          createdAt={this.props.createdAt}
-          gamesPlayed={this.props.gamesPlayed}
-          totalCorrect={this.props.totalCorrect}
-          totalIncorrect={this.props.totaIncorrect}
-          highScore={this.props.highScore}
-          bestTime={this.props.bestTime}
-          username={this.props.username}
           recordsList={this.props.recordsList}
         />
         <InfoSideBar

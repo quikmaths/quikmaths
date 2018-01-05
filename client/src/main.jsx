@@ -111,7 +111,7 @@ class App extends React.Component {
         })
         this.startTimer()
       }
-    }, 1000)
+    }, 1)
   }
 
   problemTypeUpdate(operator) {
@@ -157,9 +157,12 @@ class App extends React.Component {
     })
   }
 
-  questionsLeftUpdate() {
+  questionsLeftUpdate(cb) {
     this.setState({
       questionsLeft: this.state.questionsLeft - 1
+    }, ()=> {
+      // run callback (i.e. save data) after question count updated
+      cb(this.state.questionsLeft)
     })
   }
 
@@ -181,7 +184,7 @@ class App extends React.Component {
   showChoosePathMode() {
     this.setState({
       choosePathMode: true
-    },() =>{console.log(this.state.choosePathMode)})
+    })
   }
 
   startNewGame(operator) {
@@ -196,30 +199,36 @@ class App extends React.Component {
   }
 
   getUserInfo() {
-    console.log('getting user info')
-    axios.post('/userRecords', {
-      username: 'username',
-      operator: null,
-      ascending: false
+    axios.post('/user', {
+      username: this.state.username
     })
-    .then(function (response) {
-      console.log(response);
+    .then((response)=> {
+      this.setState({
+        userId: response.data[0].userId,
+        createdAt: response.data[0].createdAt,
+        gamesPlayed: response.data[0].gamesPlayed,
+        totalCorrect: response.data[0].totalCorrect,
+        totalIncorrect: response.data[0].totalIncorrect,
+        highScore: response.data[0].highScore,
+        bestTime: response.data[0].bestTime,
+      })
     })
-    .catch(function (error) {
+    .catch((error)=> {
       console.log(error);
     });
   }
   
   getLeaderBoard() {
-    console.log('getting records')
     axios.post('/allRecords', {
-        operator: undefined,
+        operator: this.props.problemType,
         ascending: false
     })
-    .then(function (response) {
-      console.log(response);
+    .then((response)=> {
+      this.setState({
+        recordsList: response.data
+      })
     })
-    .catch(function (error) {
+    .catch((error)=> {
       console.log(error);
     });
   }
@@ -295,10 +304,9 @@ class App extends React.Component {
               createdAt={this.state.createdAt}
               gamesPlayed={this.state.gamesPlayed}
               totalCorrect={this.state.totalCorrect}
-              totalIncorrect={this.state.totaIncorrect}
+              totalIncorrect={this.state.totalIncorrect}
               highScore={this.state.highScore}
               bestTime={this.state.bestTime}
-              username={this.state.username}
               recordsList={this.state.recordsList}
             />
             <NavSideBar
@@ -320,6 +328,8 @@ class App extends React.Component {
               inProgressBool = {this.state.inProgressBool}
               correctArray = {this.state.correctArray}
               incorrectArray = {this.state.incorrectArray}
+              userId = {this.state.userId}
+              username = {this.state.username}
               numberCorrectUpdate = {this.numberCorrectUpdate}
               numberIncorrectUpdate = {this.numberIncorrectUpdate}
               resetCounts = {this.resetCounts}
