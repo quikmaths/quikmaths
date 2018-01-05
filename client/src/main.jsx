@@ -82,6 +82,24 @@ class App extends React.Component {
     this.incorrectArrayUpdate = this.incorrectArrayUpdate.bind(this)
     this.showChoosePathMode = this.showChoosePathMode.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
+    this.logout = this.logout.bind(this)
+  }
+
+  componentDidMount(){
+    this.getIndex()
+  }
+
+  getIndex(){
+    axios.get('/git')
+         .then((result) => {
+          console.log(result)
+           if (result.data !== false){
+            this.setState({
+              isLoggedIn: true, 
+              username: result.data.user
+            })
+           }
+         })
   }
 
   startTimer() {
@@ -174,7 +192,7 @@ class App extends React.Component {
       questionsLeft: 10, 
       problemType: operator,
       choosePathMode: false
-    }, ()=> {
+    }, () => {
       this.resetCounts()
       this.inProgressBoolUpdate()
     })
@@ -217,32 +235,28 @@ class App extends React.Component {
 
   handleSignUp(obj){
     axios.post('/signup', obj)
-      .then((result) => {
-        if(result.data === false) {
-          alert('username already exists');
-        } else {
-            this.setState({"isLoggedIn" : true, 
-              "username" : result.data.username, 
-              "userId" : result.data.id}) 
-        }
-      })
+         .then((result) => {
+            if(result.data === false) {
+               alert('username already exists');
+            } else {
+               this.setState({"isLoggedIn" : true, 
+                              "username" : result.data}) 
+            }
+          })
   }
 
   handleLogin(obj) {
     axios.post('/login', obj)
-      .then((result) => {
-        if (result.data === false) {
-          alert('Please try again or Create New Account');
-        } else {
-          this.setState({"isSignedUp": true, 
-            "isLoggedIn": true, 
-            "username": result.data.username, 
-            "userId": result.data.id
-          }, ()=> {
-            this.getUserInfo()
-          })
-        }
-      })
+         .then((result) => {
+          console.log(result)
+            if (result.data === false) {
+              alert('Please try again or Create New Account');
+            } else {
+              this.setState({"isSignedUp": true, 
+                            "isLoggedIn": true, 
+                            "username": result.data})
+            }
+         })
   }
 
   goToSignUp(){
@@ -255,6 +269,18 @@ class App extends React.Component {
     this.setState({
       isSignedUp : true
     })
+  }
+
+  logout(){
+    axios.get('/logout')
+         .then(() => {
+          this.setState({
+            isLoggedIn: false, 
+            isSignedUp: true
+          }, () => {
+            this.getIndex()
+          })
+         })
   }
 
 
@@ -270,6 +296,7 @@ class App extends React.Component {
     } else {
        return (
           <div style={this.AppStyle}>
+          <button onClick={this.logout}>Logout</button>
             <NavTopBar
               getUserInfo={this.getUserInfo}
               getLeaderBoard={this.getLeaderBoard}

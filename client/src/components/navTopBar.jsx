@@ -33,19 +33,19 @@ class NavTopBar extends React.Component {
         </h4>
         <ul>
           <li>
-            <button onClick={()=> {
+            <button onClick={() => {
               this.props.getUserInfo()
               this.selectedTabUpdate('user')
             }}>User</button>
           </li>
           <li>
-            <button onClick={()=> {
+            <button onClick={() => {
               this.props.getLeaderBoard()
               this.selectedTabUpdate('leaderboard')
             }}>LeaderBoard</button>
           </li>
           <li>
-            <button onClick={()=> {
+            <button onClick={() => {
               this.selectedTabUpdate('tutorial')
             }}>Tutorial</button>
           </li>

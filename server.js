@@ -5,11 +5,55 @@ const path = require('path');
 const bodyparser = require('body-parser');
 const db = require('./db/helpers.js');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+
+
 
 app.use(bodyparser.json());
 
 // Serve up static files
 app.use(express.static(path.join(__dirname, '/client/www')));
+
+app.use(session({
+  secret: 'milksteak',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
+const isLoggedIn = function(req) {
+  return req.session ? !!req.session.user : false;
+};
+
+const checkUser = function(req, res, next){
+  console.log('hey')
+  if (!isLoggedIn(req)) {
+    res.json(false)
+  } else {
+    next();
+  }
+};
+
+const createSession = function(req, res, newUser) {
+  return req.session.regenerate(function() {
+      req.session.user = newUser;
+      res.json(newUser)
+    });
+};
+
+
+app.get('/git', checkUser, (req, res) => {
+    res.json(req.session)
+  }
+);
+
+
+app.get('/logout', function(req, res) {
+  console.log('destroy')
+  req.session.destroy(function(err) {
+    res.end();
+  });
+});
 
 // checks if username exists. if it doesn't it create the user in db
 app.post('/signup', (req, res) => {
@@ -24,7 +68,7 @@ app.post('/signup', (req, res) => {
             if (err){
               res.json(false)
             } else {
-              res.json(userObj)
+              createSession(req, res, userObj.username)
             }
           });
         });
@@ -33,6 +77,7 @@ app.post('/signup', (req, res) => {
   })
 });
 
+
 app.post('/login', (req, res) => {
   db.getUserByName(req.body.username, (exists) => {
     if (!exists) {
@@ -40,8 +85,9 @@ app.post('/login', (req, res) => {
     } else {
       bcrypt.compare(req.body.password, exists[0].dataValues.password, (err, result) => {
         if (result) {
-          res.json(exists[0].dataValues)
+          createSession(req, res, exists[0].dataValues.username)
         } else {
+          console.log(result)
           res.json(false);
         }
       })
