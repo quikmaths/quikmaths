@@ -4,18 +4,21 @@ import axios from 'axios';
 class LeaderBoard extends React.Component {
   constructor(props) {
     super(props);
+    this.rowStyle = {
+      borderBottom: 'solid 0.5px'
+    }
+    this.tableStyle = {
+      borderCollapse: 'collapse',
+      marginTop: '-20px',
+      marginBottom: '20px',
+      width: '100%'
+    }
   }
   render() {
     if (this.props.selectedTab === 'leaderboard') {
       return (
         <div>
-          <h4>Leaderboard</h4>
-          {/* <ul>
-            {this.props.recordsList.map((record, i)=> {
-              return (<li key={i}>User:{record.username} Score:{record.score} Time: {record.time} Accuracy: {record.numberCorrect / (record.numberCorrect + record.numberIncorrect) * 100 + ' %'}</li>)
-            })}
-          </ul> */}
-          <Table data={this.props.recordsList} />
+          <Table data={this.props.recordsList} rowStyle={this.rowStyle} tableStyle={this.tableStyle} />
         </div>
       )
     } else {
@@ -24,14 +27,14 @@ class LeaderBoard extends React.Component {
   }
 }
 
-const Table = ({data}) => (
-  <table>
+const Table = ({data, rowStyle, tableStyle}) => (
+  <table style={tableStyle}>
     <tbody>
       <tr>
-        <td>User</td>
-        <td>Score</td>
-        <td>Time</td>
-        <td>Accuracy</td>
+        <td style={rowStyle}>User</td>
+        <td style={rowStyle}>Score</td>
+        <td style={rowStyle}>Time</td>
+        <td style={rowStyle}>Accuracy</td>
       </tr>
       {data.map((row, key) => {
         return (<TableRow row={row} key={key} />)
