@@ -44,7 +44,7 @@ class Game extends React.Component {
 
   finalTimeUpdate(cb) {
     this.setState({
-      finalTime: this.props.timeElapsed / 100
+      finalTime: (this.props.timeElapsed / 1000).toFixed(2)
     }, ()=> {
       cb();
     })

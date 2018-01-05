@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       problemType: '+',
       timeElapsed: 0,
+      startTime: 0,
       numberCorrect: 0,
       numberIncorrect: 0,
       questionsLeft: 0,
@@ -103,11 +104,11 @@ class App extends React.Component {
   }
 
   startTimer() {
-    // timer adds seconds to timeElapsed as long as game is in progress
+
     setTimeout(() => {
       if (this.state.inProgressBool) {
         this.setState({
-          timeElapsed: this.state.timeElapsed + 1
+          timeElapsed: Date.now() - this.state.startTime
         })
         this.startTimer()
       }
@@ -191,7 +192,8 @@ class App extends React.Component {
     this.setState({
       questionsLeft: 10, 
       problemType: operator,
-      choosePathMode: false
+      choosePathMode: false,
+      startTime: Date.now()
     }, () => {
       this.resetCounts()
       this.inProgressBoolUpdate()
@@ -296,7 +298,6 @@ class App extends React.Component {
     } else {
        return (
           <div style={this.AppStyle}>
-          <button onClick={this.logout}>Logout</button>
             <NavTopBar
               getUserInfo={this.getUserInfo}
               getLeaderBoard={this.getLeaderBoard}
@@ -308,6 +309,7 @@ class App extends React.Component {
               highScore={this.state.highScore}
               bestTime={this.state.bestTime}
               recordsList={this.state.recordsList}
+              logout={this.logout}
             />
             <NavSideBar
               style={this.NavSideBarStyle}

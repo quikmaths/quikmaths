@@ -67,6 +67,7 @@ class NavTopBar extends React.Component {
         <InfoSideBar
           selectedTab={this.state.selectedTab}
         />
+        <button onClick={this.logout}>Logout</button>
       </div>
     )
   }
