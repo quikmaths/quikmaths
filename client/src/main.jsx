@@ -93,7 +93,7 @@ class App extends React.Component {
         })
         this.startTimer()
       }
-    }, 1000)
+    }, 1)
   }
 
   problemTypeUpdate(operator) {
