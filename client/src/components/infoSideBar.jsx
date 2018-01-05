@@ -6,32 +6,19 @@ import React, {Component} from 'react';
 // import AdditionTutorial from './AdditionTutorial';
 // import SubtractionTutorial from './SubtractionTutorial';
 
-
-
 class InfoSideBar extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      setting: ''
+    this.style = {
+      marginTop: '-20px',
+      marginBottom: '20px'
     }
   }
-
-
-
-
-
-
-
-
-
 render() {
   if (this.props.selectedTab === 'tutorial') {
-
     return(
-        <div>
-        <h4>
-          Tutorial
-        </h4>
+        <div style={this.style}>
+          Tutorial goes here!
         </div>
       )
   } else {

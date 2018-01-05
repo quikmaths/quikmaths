@@ -9,8 +9,21 @@ class NavTopBar extends React.Component {
     this.state = {
       selectedTab: 'user'
     }
-    this.selectStyle = {
-      'cursor' : 'pointer'
+    this.listStyle = {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr 1fr',
+      listStyleType: 'none',
+      marginLeft: '-40px',
+      marginTop: '-20px',
+      marginBottom: '40px'
+    }
+    this.listItemStyle = {
+      border: '1px solid black',
+      textAlign: 'center',
+      cursor : 'pointer'
+    }
+    this.titleStyle = {
+      marginTop: '-10px'
     }
   }
 
@@ -23,26 +36,32 @@ class NavTopBar extends React.Component {
   render(){
     return (
       <div>
-        <h1>
+        <h1 style={this.titleStyle}>
           QUIKMATHS
         </h1>
-        <ul>
-          <li>
-            <button onClick={() => {
-              this.props.getUserInfo()
-              this.selectedTabUpdate('user')
-            }}>User</button>
+        <ul style={this.listStyle}>
+          <li 
+          style={this.listItemStyle}
+          onClick={() => {
+            this.props.getUserInfo()
+            this.selectedTabUpdate('user')
+          }}>
+            User
           </li>
-          <li>
-            <button onClick={() => {
-              this.props.getLeaderBoard()
-              this.selectedTabUpdate('leaderboard')
-            }}>LeaderBoard</button>
+          <li 
+          style={this.listItemStyle}
+          onClick={() => {
+            this.props.getLeaderBoard()
+            this.selectedTabUpdate('leaderboard')
+          }}>
+            LeaderBoard
           </li>
-          <li>
-            <button onClick={() => {
-              this.selectedTabUpdate('tutorial')
-            }}>Tutorial</button>
+          <li 
+          style={this.listItemStyle}
+          onClick={() => {
+            this.selectedTabUpdate('tutorial')
+          }}>
+            Tutorial
           </li>
         </ul>
         <UserInfo
