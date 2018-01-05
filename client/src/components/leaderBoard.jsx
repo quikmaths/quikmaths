@@ -12,7 +12,7 @@ class LeaderBoard extends React.Component {
           <h4>Leaderboard</h4>
           <ul>
             {this.props.recordsList.map((record, i)=> {
-              return (<li key={i}>User:{record.username} Score:{record.score}</li>)
+              return (<li key={i}>User:{record.username} Score:{record.score} Time: {record.time} Accuracy: {record.numberCorrect / (record.numberCorrect + record.numberIncorrect) * 100 + ' %'}</li>)
             })}
           </ul>
         </div>

@@ -53,7 +53,7 @@ const Answer = (props) => (
 )
 
 const Timer = (props) => (
-	<span>Time Elapsed: {props.timeElapsed}</span>
+	<span>Time Elapsed: {props.timeElapsed/100}</span>
 )
 
 export default QuestionAnswer
