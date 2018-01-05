@@ -230,10 +230,8 @@ class App extends React.Component {
             if(result.data === false) {
                alert('username already exists');
             } else {
-              console.log('signup result', result.data)
                this.setState({"isLoggedIn" : true, 
-                              "username" : result.data.username, 
-                              "userId" : result.data.id}) 
+                              "username" : result.data}) 
             }
           })
   }
@@ -245,12 +243,9 @@ class App extends React.Component {
             if (result.data === false) {
               alert('Please try again or Create New Account');
             } else {
-              console.log('login result', result.data)
               this.setState({"isSignedUp": true, 
                             "isLoggedIn": true, 
-                            "username": result.data.username, 
-                            "userId": result.data.id
-                          })
+                            "username": result.data})
             }
          })
   }
