@@ -74,6 +74,7 @@ app.post('/user', (req, res) => {
 }
 */
 app.post('/newRecord', (req, res) => {
+  console.log(req.body);
   db.addNewRecord(req.body);
   res.send('Record Added to Database');
 })

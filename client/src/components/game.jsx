@@ -83,16 +83,15 @@ class Game extends React.Component {
       this.props.numberCorrect,
       this.props.numberIncorrect
     )
-    axios.post('/newRecord', (req, res) => {
-      res.send({
+    console.log(this.props.problemType);
+    axios.post('/newRecord', {
         'time': this.state.finalTime,
         'numberCorrect': this.props.numberCorrect,
         'numberIncorrect': this.props.numberIncorrect,
         'score': newScore,
-        'userId': userId,
-        'operator': this.state.problemType
+        'userId': this.props.userId,
+        'operator': this.props.problemType
       })
-    })
   }
 
 
