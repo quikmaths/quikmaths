@@ -69,7 +69,6 @@ class App extends React.Component {
     this.goToLogin = this.goToLogin.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
     this.inProgressBoolUpdate = this.inProgressBoolUpdate.bind(this)
-    this.problemTypeUpdate = this.problemTypeUpdate.bind(this)
     this.questionsLeftUpdate = this.questionsLeftUpdate.bind(this)
     this.getUserInfo = this.getUserInfo.bind(this)
     this.getLeaderBoard = this.getLeaderBoard.bind(this)
@@ -112,13 +111,6 @@ class App extends React.Component {
         this.startTimer()
       }
     }, 1)
-  }
-
-  problemTypeUpdate(operator) {
-    // navsidebar passes in operator onclick
-    this.setState({
-      problemType: operator
-    })
   }
 
   inProgressBoolUpdate() {
@@ -193,6 +185,7 @@ class App extends React.Component {
       problemType: operator,
       choosePathMode: false
     }, () => {
+      console.log(this.state.problemType);
       this.resetCounts()
       this.inProgressBoolUpdate()
     })
@@ -314,7 +307,6 @@ class App extends React.Component {
               inProgressBool = {this.state.inProgressBool}
               startNewGame= {this.startNewGame}
               inProgressBoolUpdate = {this.inProgressBoolUpdate}
-              problemTypeUpdate = {this.problemTypeUpdate}
               questionsLeftUpdate = {this.questionsLeftUpdate}
               choosePathMode = {this.state.choosePathMode}
             />
