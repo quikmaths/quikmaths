@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 
 
 
-class  InfoSideBar extends Component {
+class InfoSideBar extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,12 +25,18 @@ class  InfoSideBar extends Component {
 
 
 render() {
-  return(
-      <div>
+  if (this.props.selectedTab === 'tutorial') {
 
-
-      </div>
-    )
+    return(
+        <div>
+        <h4>
+          Tutorial
+        </h4>
+        </div>
+      )
+  } else {
+    return null
+  }
   }
 }
 
