@@ -277,6 +277,7 @@ class App extends React.Component {
               inProgressBool = {this.state.inProgressBool}
               correctArray = {this.state.correctArray}
               incorrectArray = {this.state.incorrectArray}
+              userId = {this.state.userId}
               numberCorrectUpdate = {this.numberCorrectUpdate.bind(this)}
               numberIncorrectUpdate = {this.numberIncorrectUpdate.bind(this)}
               resetCounts = {this.resetCounts.bind(this)}
