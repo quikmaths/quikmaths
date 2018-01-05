@@ -28,9 +28,9 @@ class NavTopBar extends React.Component {
   render(){
     return (
       <div>
-        <h4>
-          NavbarTop
-        </h4>
+        <h1>
+          QUIKMATHS
+        </h1>
         <ul>
           <li>
             <button onClick={() => {
