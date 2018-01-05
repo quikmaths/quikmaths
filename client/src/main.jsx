@@ -12,6 +12,7 @@ import SignUp from './components/signUp.jsx';
 import questionGen from '../../problemGen.js';
 import _ from 'underscore';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -53,16 +54,18 @@ class App extends React.Component {
       fontFamily: 'Poppins',
       display: 'grid',
       gridTemplateColumns: '2fr 5fr',
-      gridColumnGap: '2.5%'
+      gridColumnGap: '2.5%',
+      backgroundColor: '#96bbbb'
     }
     this.collapseStyle = {
       fontFamily: 'Poppins',
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gridColumnGap: '2.5%'
+      gridColumnGap: '2.5%', 
+      backgroundColor: '#96bbbb'
     }
     this.NavTopBarStyle = {
-
+      backgroundColor: "#F2E3BC"
     }
 
     this.handleLogin = this.handleLogin.bind(this);
@@ -278,7 +281,9 @@ class App extends React.Component {
         } else {
           this.setState({"isSignedUp": true, 
           "isLoggedIn": true, 
-          "username": result.data})
+          "username": result.data}, () => {
+            this.getUserInfo()
+          })
         }
       })
   }
@@ -322,7 +327,7 @@ class App extends React.Component {
       )
     } else {
        return (
-          <div style={this.collapseStyle}>
+          <div style={this.appStyle}>
             <NavTopBar
               getUserInfo={this.getUserInfo}
               getLeaderBoard={this.getLeaderBoard}
@@ -337,6 +342,7 @@ class App extends React.Component {
               totalUserCorrect={this.state.totalUserCorrect}
               totalUserIncorrect={this.state.totalUserIncorrect}
               logout={this.logout}
+              style={this.navTopBarStyle}
             />
             <NavSideBar
               style={this.NavSideBarStyle}
