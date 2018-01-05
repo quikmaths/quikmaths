@@ -61,9 +61,9 @@ const getAllUsers = function(cb) {
       })
 }
 //userInfo not defined yet; might have to refactor based on what's passed in 
+
 const updateUser = function(userInfo, cb) {
-  //get previous user stats
-  getUserByName(userInfo.username, function(results){
+  getUserByName(userInfo.username, function(results) {
     let totalCorrect = results[0].dataValues.totalCorrect
     let totalIncorrect = results[0].dataValues.totalIncorrect
     let gamesPlayed = results[0].dataValues.gamesPlayed
@@ -71,23 +71,30 @@ const updateUser = function(userInfo, cb) {
     let bestTime = results[0].dataValues.bestTime
 
    //add new users stats to previous user stats
+   User.find({where: {username: userInfo.username}})
+   .then(user => {
     let newTotalCorrect = totalCorrect + userInfo.totalCorrect 
     let newTotalIncorrect = totalIncorrect + userInfo.totalIncorrect 
     let newGamesPlayed = gamesPlayed + 1
     let newHighScore = Math.max(highScore, userInfo.highScore)
     let newBestTime = Math.min(bestTime, userInfo.bestTime)
+   }, () => console.log('should be best time', newBestTime))
 
-    //update with new stats
-    User.update({
-      "totalCorrect": newTotalCorrect, 
-      "totalIncorrect": newTotalIncorrect, 
-      "gamesPlayed": newGamesPlayed, 
-      "highScore": newHighScore, 
-      "bestTime": newBestTime
-    }, {where : {"username": userInfo.username}}).then(() => cb())
+    User.find({where: {username: userInfo.username}})
+        .then(user => {
+          user.update({
+            "totalCorrect": newTotalCorrect, 
+            "totalIncorrect": newTotalIncorrect, 
+            "gamesPlayed": newGamesPlayed, 
+            "highScore": newHighScore, 
+            "bestTime": newBestTime
+          })
+          .then(user => {cb(user)})
+          .catch(error => {console.log('error: ', error)})
+        })
   })
-
 }
+
 
 
 
