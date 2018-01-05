@@ -90,7 +90,7 @@ class Login extends React.Component {
     return(
       <div style={containerStyle}>
         <div style={introStyle}>
-          <h1>Welcome to QuikMath</h1>
+          <h1>Welcome to QuikMaths</h1>
           <h4>Learn, Play, Compete</h4>
           <p>It's like HQ trivia but it's only for math, you can't win money, and we have a tenth of a percentage of their userbase</p>
         </div>

@@ -5,47 +5,49 @@ class UserInfo extends React.Component {
   constructor(props) {
     super(props);
     this.columnStyle = {
-      textAlign: 'center'
+      paddingLeft: '20px'
     }
     this.tableStyle = {
       borderCollapse: 'collapse',
       marginTop: '-20px',
       marginBottom: '20px',
-      marginLeft: '-20px',
       width: '100%'
     }
   }
   render() {
-    if (this.props.selectedTab === 'user') {
+    if (this.props.selectedTab === 'user' && this.props.toggleTab) {
       return (
-        <table style={this.tableStyle}>
-          <tbody>
-            <tr>
-              <td style={this.columnStyle}>Username</td>
-              <td style={this.columnStyle}>{this.props.username}</td>
-            </tr>
-            <tr>
-              <td style={this.columnStyle}>High Score</td>
-              <td style={this.columnStyle}>{this.props.highScore}</td>
-            </tr>
-            <tr>
-              <td style={this.columnStyle}>Best Time</td>
-              <td style={this.columnStyle}>{this.props.bestTime}</td>
-            </tr>
-            <tr>
-              <td style={this.columnStyle}>Games Played</td>
-              <td style={this.columnStyle}>{this.props.gamesPlayed}</td>
-            </tr>
-            <tr>
-              <td style={this.columnStyle}>Total Correct</td>
-              <td style={this.columnStyle}>{this.props.totalCorrect}</td>
-            </tr>
-            <tr>
-              <td style={this.columnStyle}>Total Incorrect</td>
-              <td style={this.columnStyle}>{this.props.totalIncorrect}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <table style={this.tableStyle}>
+            <tbody>
+              <tr>
+                <td>Username</td>
+                <td>{this.props.username}</td>
+              </tr>
+              <tr>
+                <td>High Score</td>
+                <td style={this.columnStyle}>{this.props.highScore}</td>
+              </tr>
+              <tr>
+                <td>Best Time</td>
+                <td style={this.columnStyle}>{this.props.bestTime}</td>
+              </tr>
+              <tr>
+                <td>Games Played</td>
+                <td style={this.columnStyle}>{this.props.gamesPlayed}</td>
+              </tr>
+              <tr>
+                <td>Total Correct</td>
+                <td style={this.columnStyle}>{this.props.totalCorrect}</td>
+              </tr>
+              <tr>
+                <td>Total Incorrect</td>
+                <td style={this.columnStyle}>{this.props.totalIncorrect}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button onClick={this.props.logout}>Logout</button>
+        </div>
       )
     } else {
       return null
