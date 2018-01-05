@@ -15,7 +15,6 @@ class QuestionAnswer extends React.Component {
 				this.props.incorrectArrayUpdate(question)
 				this.props.numberIncorrectUpdate()
 			}
-			console.log(questionsLeft)
 			if (questionsLeft === 0){
 				this.props.finalTimeUpdate(()=> {
 					this.props.saveNewScore()
@@ -54,7 +53,7 @@ const Answer = (props) => (
 )
 
 const Timer = (props) => (
-	<span>Time Elapsed: {props.timeElapsed/100}</span>
+	<span>Time Elapsed: {(props.timeElapsed/1000).toFixed(2)}</span>
 )
 
 export default QuestionAnswer

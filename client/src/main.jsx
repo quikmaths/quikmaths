@@ -9,6 +9,8 @@ import LeaderBoard from './components/leaderBoard.jsx';
 import UserInfo from './components/userInfo.jsx';
 import Login from './components/login.jsx';
 import SignUp from './components/signUp.jsx';
+import questionGen from '../../problemGen.js';
+import _ from 'underscore';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,12 +18,17 @@ class App extends React.Component {
     this.state = {
       problemType: '+',
       timeElapsed: 0,
+      startTime: 0,
       numberCorrect: 0,
       numberIncorrect: 0,
       questionsLeft: 0,
       inProgressBool: false,
       correctArray: [],
       incorrectArray: [],
+      //state for newQuestion
+      questionString: [],
+      answers: [],
+      correctAnswer: undefined,
       // states for userinfo
       username: null,
       userId: null,
@@ -31,7 +38,6 @@ class App extends React.Component {
       totalIncorrect: null,
       highScore: null,
       bestTime: null,
-      // correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
       // array of leaderboard records
       recordsList: [],
       // render login page conditionally
@@ -44,25 +50,16 @@ class App extends React.Component {
 
     }
     this.AppStyle = {
+      fontFamily: 'Poppins',
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
-      gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
-      fontFamily: 'Poppins',
-      padding: '10px'
+      gridTemplateColumns: '2fr 5fr',
+      gridColumnGap: '2.5%'
     }
-    this.NavSideBarStyle = {
-      gridColumn: '1',
-      gridRow: '1/5'
-    }
-    this.InfoSideBarStyle = {
-      gridColumn: '5',
-      gridRow: '2/5',
-      fontFamily: 'Poppins',
-      backgroundColor: 'gray'
+    this.NavTopBarStyle = {
+
     }
     this.GameStyle = {
-      gridColumn: '2/5',
-      gridRow: '2/5'
+
     }
 
     this.handleLogin = this.handleLogin.bind(this);
@@ -71,7 +68,6 @@ class App extends React.Component {
     this.goToLogin = this.goToLogin.bind(this)
     this.startNewGame = this.startNewGame.bind(this)
     this.inProgressBoolUpdate = this.inProgressBoolUpdate.bind(this)
-    this.problemTypeUpdate = this.problemTypeUpdate.bind(this)
     this.questionsLeftUpdate = this.questionsLeftUpdate.bind(this)
     this.getUserInfo = this.getUserInfo.bind(this)
     this.getLeaderBoard = this.getLeaderBoard.bind(this)
@@ -86,16 +82,25 @@ class App extends React.Component {
     this.startNewGame = this.startNewGame.bind(this)
     this.logout = this.logout.bind(this)
     this.updateUserInfo = this.updateUserInfo.bind(this)
+    this.newQuestion = this.newQuestion.bind(this);
   }
 
   componentDidMount(){
     this.getIndex()
   }
 
+  newQuestion() {
+    let infoObject = questionGen(this.state.problemType, 3, 1);
+    this.setState({
+      questionString: `${infoObject.question[1]} ${infoObject.question[0]} ${infoObject.question[2]}`,
+      answers: _.shuffle(infoObject.choices),
+      correctAnswer: infoObject.correctAnswer
+    })
+  }
+
   getIndex(){
     axios.get('/git')
          .then((result) => {
-          console.log(result)
            if (result.data !== false){
             this.setState({
               isLoggedIn: true, 
@@ -106,22 +111,15 @@ class App extends React.Component {
   }
 
   startTimer() {
-    // timer adds seconds to timeElapsed as long as game is in progress
+
     setTimeout(() => {
       if (this.state.inProgressBool) {
         this.setState({
-          timeElapsed: this.state.timeElapsed + 1
+          timeElapsed: Date.now() - this.state.startTime
         })
         this.startTimer()
       }
     }, 1)
-  }
-
-  problemTypeUpdate(operator) {
-    // navsidebar passes in operator onclick
-    this.setState({
-      problemType: operator
-    })
   }
 
   inProgressBoolUpdate() {
@@ -194,8 +192,10 @@ class App extends React.Component {
     this.setState({
       questionsLeft: 10, 
       problemType: operator,
-      choosePathMode: false
+      choosePathMode: false,
+      startTime: Date.now()
     }, () => {
+      this.newQuestion(operator);
       this.resetCounts()
       this.inProgressBoolUpdate()
     })
@@ -262,7 +262,6 @@ class App extends React.Component {
   handleLogin(obj) {
     axios.post('/login', obj)
          .then((result) => {
-          console.log(result)
             if (result.data === false) {
               alert('Please try again or Create New Account');
             } else {
@@ -310,7 +309,6 @@ class App extends React.Component {
     } else {
        return (
           <div style={this.AppStyle}>
-          <button onClick={this.logout}>Logout</button>
             <NavTopBar
               getUserInfo={this.getUserInfo}
               getLeaderBoard={this.getLeaderBoard}
@@ -324,13 +322,13 @@ class App extends React.Component {
               recordsList={this.state.recordsList}
               totalUserCorrect={this.state.totalUserCorrect}
               totalUserIncorrect={this.state.totalUserIncorrect}
+              logout={this.logout}
             />
             <NavSideBar
               style={this.NavSideBarStyle}
               inProgressBool = {this.state.inProgressBool}
               startNewGame= {this.startNewGame}
               inProgressBoolUpdate = {this.inProgressBoolUpdate}
-              problemTypeUpdate = {this.problemTypeUpdate}
               questionsLeftUpdate = {this.questionsLeftUpdate}
               choosePathMode = {this.state.choosePathMode}
             />
@@ -357,8 +355,10 @@ class App extends React.Component {
               showChoosePathMode = {this.showChoosePathMode}
               startNewGame= {this.startNewGame}
               updateUserInfo = {this.updateUserInfo}
-            
-              
+              newQuestion = {this.newQuestion}
+              questionString = {this.state.questionString}
+              answers = {this.state.answers}
+              correctAnswer = {this.state.correctAnswer}
             />
           </div>
        )

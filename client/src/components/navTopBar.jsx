@@ -9,11 +9,6 @@ class NavTopBar extends React.Component {
     this.state = {
       selectedTab: 'user'
     }
-    this.style = {
-      'display' : 'flex',
-      'flexDirection': 'column',
-      'fontFamily' : 'Poppins'
-    }
     this.selectStyle = {
       'cursor' : 'pointer'
     }
@@ -28,9 +23,9 @@ class NavTopBar extends React.Component {
   render(){
     return (
       <div>
-        <h4>
-          NavbarTop
-        </h4>
+        <h1>
+          QUIKMATHS
+        </h1>
         <ul>
           <li>
             <button onClick={() => {
@@ -69,6 +64,7 @@ class NavTopBar extends React.Component {
         <InfoSideBar
           selectedTab={this.state.selectedTab}
         />
+        <button onClick={this.logout}>Logout</button>
       </div>
     )
   }
