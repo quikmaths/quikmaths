@@ -181,15 +181,21 @@ class App extends React.Component {
   }
 
   getUserInfo() {
-    axios.post('/userRecords', {
-      username: this.props.username,
-      operator: this.props.problemType,
-      ascending: false
+    axios.post('/user', {
+      username: this.state.username
     })
-    .then(function (response) {
-      console.log(response.data)
+    .then((response)=> {
+      this.setState({
+        userId: response.data[0].userId,
+        createdAt: response.data[0].createdAt,
+        gamesPlayed: response.data[0].gamesPlayed,
+        totalCorrect: response.data[0].totalCorrect,
+        totalIncorrect: response.data[0].totalIncorrect,
+        highScore: response.data[0].highScore,
+        bestTime: response.data[0].bestTime,
+      })
     })
-    .catch(function (error) {
+    .catch((error)=> {
       console.log(error);
     });
   }
@@ -232,6 +238,8 @@ class App extends React.Component {
             "isLoggedIn": true, 
             "username": result.data.username, 
             "userId": result.data.id
+          }, ()=> {
+            this.getUserInfo()
           })
         }
       })
@@ -269,10 +277,9 @@ class App extends React.Component {
               createdAt={this.state.createdAt}
               gamesPlayed={this.state.gamesPlayed}
               totalCorrect={this.state.totalCorrect}
-              totalIncorrect={this.state.totaIncorrect}
+              totalIncorrect={this.state.totalIncorrect}
               highScore={this.state.highScore}
               bestTime={this.state.bestTime}
-              username={this.state.username}
               recordsList={this.state.recordsList}
             />
             <NavSideBar
