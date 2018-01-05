@@ -38,7 +38,6 @@ class App extends React.Component {
       totalIncorrect: null,
       highScore: null,
       bestTime: null,
-      // correctPercentage: this.state.totalCorrect / (this.state.totalCorrect + this.state.totalIncorrect) * 100
       // array of leaderboard records
       recordsList: [],
       // render login page conditionally
@@ -49,25 +48,16 @@ class App extends React.Component {
 
     }
     this.AppStyle = {
+      fontFamily: 'Poppins',
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
-      gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
-      fontFamily: 'Poppins',
-      padding: '10px'
+      gridTemplateColumns: '2fr 5fr',
+      gridColumnGap: '2.5%'
     }
-    this.NavSideBarStyle = {
-      gridColumn: '1',
-      gridRow: '1/5'
-    }
-    this.InfoSideBarStyle = {
-      gridColumn: '5',
-      gridRow: '2/5',
-      fontFamily: 'Poppins',
-      backgroundColor: 'gray'
+    this.NavTopBarStyle = {
+
     }
     this.GameStyle = {
-      gridColumn: '2/5',
-      gridRow: '2/5'
+
     }
 
     this.handleLogin = this.handleLogin.bind(this);
@@ -108,7 +98,6 @@ class App extends React.Component {
   getIndex(){
     axios.get('/git')
          .then((result) => {
-          console.log(result)
            if (result.data !== false){
             this.setState({
               isLoggedIn: true, 
@@ -259,7 +248,6 @@ class App extends React.Component {
   handleLogin(obj) {
     axios.post('/login', obj)
          .then((result) => {
-          console.log(result)
             if (result.data === false) {
               alert('Please try again or Create New Account');
             } else {
